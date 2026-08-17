@@ -1,24 +1,24 @@
+"Модуль отвечает за работу с файлами"
+
 import csv
 
-
 def get_csv_dict(file_name):
-    with open(file_name, 'r', encoding='utf-8') as f:
+    with open(file_name, 'r', encoding='utf-8') as f: 
         data = list(csv.DictReader(f))
     return data
 
-def save_csv_predict(d: dict):
+def save_csv(d: dict, columns: list, filename: str):
     """Сохранение csv предикта """
-    columns = ["PassengerId", "Score"]
-
-    with open("result.csv", "w", encoding="utf-8", newline="") as f:
+    with open(filename, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=columns)
 
         writer.writeheader()
 
         for passenger_id, score in d.items():
+            
             writer.writerow({
-                "PassengerId": passenger_id,
-                "Score": score
+                columns[0]: passenger_id,
+                columns[1]: score
             })
             
 def load_scores(filename: str) -> dict:
@@ -31,3 +31,14 @@ def load_scores(filename: str) -> dict:
             scores[row["PassengerId"]] = float(row["Score"])
 
     return scores
+
+def survived_dict(filename:str) -> dict:
+    """Создаём словарь типа id -> survived"""
+    result = {}
+    data = get_csv_dict(filename)
+    for idx, d in enumerate(data):
+        result[d["PassengerId"]] = int(d["Survived"])
+    return result 
+
+
+    

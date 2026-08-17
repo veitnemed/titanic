@@ -1,3 +1,4 @@
+"Вспомгательные функции для вывода информации"
 
 def all_status(train_dataset: list, feature: str) -> set:
 
@@ -49,3 +50,4 @@ def empty_value_counter(train_dataset: list, feature: str) -> int:
             result +=1 
 
     return result
+

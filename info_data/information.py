@@ -1,12 +1,20 @@
+"Вывод основной информации о датасетах"
+
 import csv
 import os 
-from func import all_status, survived_in_group, group_year_range, empty_value_counter
-from constant import ru_column
+from funcs_for_information import (all_status, 
+                                   survived_in_group, 
+                                   group_year_range, 
+                                   empty_value_counter)
+from config import (ru_column,  
+                    DATA_TRAIN,
+                    DATA_TEST)
 
-with open('test.csv','r',encoding='utf-8') as f, open('train.csv', 'r', encoding='utf-8') as f1:
-    dict_test = list(csv.DictReader(f))
+with open(DATA_TRAIN, 'r', encoding='utf-8') as f1:
     dict_train = list(csv.DictReader(f1))
 
+with open(DATA_TEST, 'r', encoding='utf-8') as f1:
+    dict_test = list(csv.DictReader(f1))
 os.system("cls")
 features = list(dict_test[0].keys())
 
@@ -101,4 +109,20 @@ for k, v in sorted(group_year_range(dict_train, step).items()):
     else:
 
         print(f"От {int(k)} до {int(k+step)}: {v}")
+
+print("====================================")
+print("====================================")
+print("====================================")
+print("\n\n======== TRAIN_CSV  =========\n")
+
+
+print("\n\n======== ЗНАЧЕНИЯ ПРИЗНАКОВ (test.csv) =========\n")
+
+for column in dict_train[0].keys():
+    if column != "Survived":
+        status_set = all_status(dict_test, column)
+        lenth = len(status_set)
+        print(f"Уникальных значениий признака '{column} // {ru_column.get(column, column)} - {lenth}")
+        print(f"Первые 10 значений:")
+        print(*sorted(status_set)[:10],"\n")
 

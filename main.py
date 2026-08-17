@@ -1,36 +1,62 @@
-import csv
-from storage import get_csv_dict, save_csv_predict, load_scores
-from config import first_weights, SCORES_CSV, TRAIN_CSV, FEATURES
+from storage import (get_csv_dict, 
+                     save_csv,
+                     survived_dict)
+from info_data.config import  (RESULT_TEST_SCORES, DATA_TEST, 
+                               DATA_TRAIN, 
+                               RESULT_TEST_BINARE, 
+                               COLUMNS_PREDICT, 
+                               COLUMNS_BINARE,
+                               DATA_SUBMISSION,
+                               RESULT_TRAIN_BINARE,
+                               RESULT_TRAIN_SCORES
+                                )
 
-def get_score(passenger: dict) -> float:
-    """Считаем итоговое значение для одного пассажира"""
-    score = 0.0
-    for feature in FEATURES:
-        value = passenger[feature]
-        if value != "":
-            score+= float(first_weights[feature][value])
-    return score
+from scores import (create_dict_scores, 
+                    create_dict_binare, 
+                    survived_counter, 
+                    mean_csv_result,
+                    number_of_prediction,
+                    procent_prediction,)
 
-def create_dict_scores(dataset: dict) -> dict:
-    """Собирает словарь с предиктом для каждого пасажира"""
-    result = {}
-    for passenger in dataset:
-        result[passenger["PassengerId"]] = get_score(passenger)
-    return result
+def show_main_info_for_traning(score_dict: dict, binare_dict: dict, mean_score: float):
+    """Выводится основная информация о прогнозе"""
+    print(f"Threshold: {round(mean_score,2)}")
+    print("Min score:", round(min(list(score_dict.values())),2))
+    print("Max score:", round(max(list(score_dict.values())),2))
+    print(f"Количество выживших по предсказанию: {survived_counter(binare_dict)}")
+    
+    
+def show_result_info(binare_dict: dict, actual_survived: dict, mess: str):
+    print(f"{mess}\n")
+    lenth = len(binare_dict)
+    n = number_of_prediction(binare_dict, actual_survived)
+    p = procent_prediction(lenth, n)
+    print(lenth, n)
+    print(f"Количество правильных предсказаний: {n} из {lenth}")
+    print(f"{p} % правильных, {round(100-p,2)} % ошибок")
 
-def survived_counter(file_name: str) -> int:
-    """Считает количекство выживших в датесете file_name"""
-    with open(file_name,'r',encoding="utf-8", newline="") as f:
-        csv_list = list(csv.DictReader(f))
-    counter = 0
-    for obj in csv_list:
-        counter += int(obj["Survived"])
-    return counter
+
+
+def init_dicts(name_dataset: str, name_score: str, name_binare: str)-> tuple:
+    """Инциализация стартовых словарей"""
+    raw_dict = get_csv_dict(name_dataset)
+    score_dict = create_dict_scores(raw_dict)
+    save_csv(score_dict, COLUMNS_PREDICT, name_score)
+    threshold = mean_csv_result(score_dict)
+    binare_dict = create_dict_binare(score_dict, threshold)
+    save_csv(binare_dict, COLUMNS_BINARE, name_binare)
+    return (raw_dict, score_dict, binare_dict, threshold)
 
 def main_func():
-    data = get_csv_dict(TRAIN_CSV)
-    score_dict = create_dict_scores(data)
-    save_csv_predict(score_dict)
-
+    raw_dict, score_dict, binare_dict, threshold = init_dicts(DATA_TRAIN, RESULT_TEST_SCORES, RESULT_TEST_BINARE)
+    raw_dict_test, score_dict_test, binare_dict_test, threshold_test = init_dicts(DATA_TEST, RESULT_TRAIN_SCORES, RESULT_TRAIN_BINARE)
+    actual_survived = survived_dict(DATA_TRAIN)
+    
+    show_result_info(binare_dict, actual_survived, "Тренировочный датасет")
+    show_main_info_for_traning(score_dict, binare_dict, threshold)
+    
+    
+        
 if __name__ == "__main__":
     main_func()
+
