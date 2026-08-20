@@ -1,20 +1,35 @@
 "Вывод основной информации о датасетах"
 
 import csv
-import os 
+
 from funcs_for_information import (all_status, 
                                    survived_in_group, 
                                    group_year_range, 
                                    empty_value_counter)
+import os
+import sys
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
+
+
+# __file__ - текущий файл (information.py)
+# os.path.dirname(__file__) - путь к папке
+# >> c:\Users\super\Desktop\vscode projects\titanic\info_data
+
+
+    
 from config import (ru_column,  
-                    DATA_TRAIN,
+                    TRAIN,
                     DATA_TEST)
 
-with open(DATA_TRAIN, 'r', encoding='utf-8') as f1:
-    dict_train = list(csv.DictReader(f1))
+
 
 with open(DATA_TEST, 'r', encoding='utf-8') as f1:
     dict_test = list(csv.DictReader(f1))
+with open(TRAIN, 'r', encoding='utf-8') as f1:
+    dict_train = list(csv.DictReader(f1))
 os.system("cls")
 features = list(dict_test[0].keys())
 

@@ -41,4 +41,3 @@ def survived_dict(filename:str) -> dict:
     return result 
 
 
-    

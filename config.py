@@ -1,14 +1,10 @@
 "Глобальные константы, "
 
-RESULT_TEST_SCORES = "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_test_scores.csv"
-RESULT_TEST_BINARE = "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_test_binare.csv"
-RESULT_TRAIN_SCORES = "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_train_scores.csv"
-RESULT_TRAIN_BINARE= "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_train_binare.csv"
-
-DATA_TRAIN = 'C:/Users/super/Desktop/vscode projects/titanic/datasets/train.csv'
-DATA_TEST = 'C:/Users/super/Desktop/vscode projects/titanic/datasets/test.csv'
+RESULT= "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_train_binare.csv"
+TRAIN = 'C:/Users/super/Desktop/vscode projects/titanic/datasets/train.csv'
 
 
+CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived"]
 
 COLUMNS_PREDICT = ["PassengerId", "Score"]
 COLUMNS_BINARE = ["PassengerId", "Survived"]

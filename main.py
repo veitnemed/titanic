@@ -1,13 +1,12 @@
 from storage import (get_csv_dict, 
                      save_csv,
                      survived_dict)
-from info_data.config import  (RESULT_TEST_SCORES, DATA_TEST, 
-                               DATA_TRAIN, 
+from config import  (RESULT_TEST_SCORES, DATA_TEST, 
+                               TRAIN, 
                                RESULT_TEST_BINARE, 
                                COLUMNS_PREDICT, 
                                COLUMNS_BINARE,
-                               DATA_SUBMISSION,
-                               RESULT_TRAIN_BINARE,
+                               RESULT,
                                RESULT_TRAIN_SCORES
                                 )
 
@@ -37,20 +36,18 @@ def show_result_info(binare_dict: dict, actual_survived: dict, mess: str):
 
 
 
-def init_dicts(name_dataset: str, name_score: str, name_binare: str)-> tuple:
+def init_dicts(name_dataset: str, name_binare: str)-> tuple:
     """Инциализация стартовых словарей"""
     raw_dict = get_csv_dict(name_dataset)
     score_dict = create_dict_scores(raw_dict)
-    save_csv(score_dict, COLUMNS_PREDICT, name_score)
     threshold = mean_csv_result(score_dict)
     binare_dict = create_dict_binare(score_dict, threshold)
     save_csv(binare_dict, COLUMNS_BINARE, name_binare)
     return (raw_dict, score_dict, binare_dict, threshold)
 
 def main_func():
-    raw_dict, score_dict, binare_dict, threshold = init_dicts(DATA_TRAIN, RESULT_TEST_SCORES, RESULT_TEST_BINARE)
-    raw_dict_test, score_dict_test, binare_dict_test, threshold_test = init_dicts(DATA_TEST, RESULT_TRAIN_SCORES, RESULT_TRAIN_BINARE)
-    actual_survived = survived_dict(DATA_TRAIN)
+    raw_dict, score_dict, binare_dict, threshold = init_dicts(TRAIN, RESULT_TEST_BINARE)
+    actual_survived = survived_dict(TRAIN)
     
     show_result_info(binare_dict, actual_survived, "Тренировочный датасет")
     show_main_info_for_traning(score_dict, binare_dict, threshold)

@@ -1,6 +1,6 @@
 """Модуль отвечает за математику предсказания"""
 
-from info_data.config import (first_weights, 
+from config import (first_weights, 
                               FEATURES,
                               )
 
@@ -35,6 +35,8 @@ def create_dict_scores(dataset: dict) -> dict:
         result[passenger["PassengerId"]] = get_score(passenger)
     return result
 
+
+
 def create_dict_binare(dataset: dict, threshold: float) -> dict:
     """Собирает словарь бинарными значениями для каждого пасажира"""
     result = {}
@@ -60,7 +62,3 @@ def number_of_prediction(binare_dict: dict, survived_dict: dict) -> int:
 def procent_prediction(lenth, number):
     return round(100*(number/lenth),2)
 
-
-a = 10
-
-print(f"a={a} %")
