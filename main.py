@@ -1,13 +1,9 @@
 from storage import (get_csv_dict, 
                      save_csv,
-                     survived_dict)
-from config import  (RESULT_TEST_SCORES, DATA_TEST, 
-                               TRAIN, 
-                               RESULT_TEST_BINARE, 
-                               COLUMNS_PREDICT, 
-                               COLUMNS_BINARE,
-                               RESULT,
-                               RESULT_TRAIN_SCORES
+                     survived_dict,
+                     baseline_dict)
+from config import  (TRAIN, COLUMNS_BINARE, RESULT,
+                               
                                 )
 
 from scores import (create_dict_scores, 
@@ -24,13 +20,14 @@ def show_main_info_for_traning(score_dict: dict, binare_dict: dict, mean_score: 
     print("Max score:", round(max(list(score_dict.values())),2))
     print(f"Количество выживших по предсказанию: {survived_counter(binare_dict)}")
     
+
     
+    pass
 def show_result_info(binare_dict: dict, actual_survived: dict, mess: str):
     print(f"{mess}\n")
     lenth = len(binare_dict)
     n = number_of_prediction(binare_dict, actual_survived)
     p = procent_prediction(lenth, n)
-    print(lenth, n)
     print(f"Количество правильных предсказаний: {n} из {lenth}")
     print(f"{p} % правильных, {round(100-p,2)} % ошибок")
 
@@ -46,13 +43,12 @@ def init_dicts(name_dataset: str, name_binare: str)-> tuple:
     return (raw_dict, score_dict, binare_dict, threshold)
 
 def main_func():
-    raw_dict, score_dict, binare_dict, threshold = init_dicts(TRAIN, RESULT_TEST_BINARE)
+    raw_dict, score_dict, binare_dict, threshold = init_dicts(TRAIN, RESULT)
     actual_survived = survived_dict(TRAIN)
     
     show_result_info(binare_dict, actual_survived, "Тренировочный датасет")
     show_main_info_for_traning(score_dict, binare_dict, threshold)
-    
-    
+    print(baseline_dict(TRAIN))
         
 if __name__ == "__main__":
     main_func()

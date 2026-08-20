@@ -62,3 +62,7 @@ def number_of_prediction(binare_dict: dict, survived_dict: dict) -> int:
 def procent_prediction(lenth, number):
     return round(100*(number/lenth),2)
 
+#BASELINE
+
+def number_of_baseline(baseline_binare: dict, actual_survived: dict) -> int:
+    return number_of_prediction(baseline_binare, actual_survived)

@@ -40,4 +40,18 @@ def survived_dict(filename:str) -> dict:
         result[d["PassengerId"]] = int(d["Survived"])
     return result 
 
+def baseline_dict(filename):
+    """Создается словарь по логике если пол =  М то 0, иначе 1"""
+    csv_list = get_csv_dict(filename)
+    baseline = {}
+    
+    for passenger in csv_list:
+        if passenger["Sex"] == "male":
+            baseline[passenger["PassengerId"]] = 0
+        elif passenger["Sex"] == "female":
+            baseline["PassengerId"] = 1
+            
+    return baseline
+
+
 

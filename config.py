@@ -11,8 +11,8 @@ COLUMNS_BINARE = ["PassengerId", "Survived"]
 
 first_weights = {
     "Sex": {
-        "female": 0.68,
-        "male": 0.32
+        "female": 0.742,
+        "male": 0.189
     },
     "SibSp": {
         "0": 0.345,

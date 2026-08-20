@@ -21,26 +21,22 @@ if root_dir not in sys.path:
 
     
 from config import (ru_column,  
-                    TRAIN,
-                    DATA_TEST)
+                    TRAIN)
 
 
 
-with open(DATA_TEST, 'r', encoding='utf-8') as f1:
-    dict_test = list(csv.DictReader(f1))
+
 with open(TRAIN, 'r', encoding='utf-8') as f1:
     dict_train = list(csv.DictReader(f1))
 os.system("cls")
-features = list(dict_test[0].keys())
+features = list(dict_train[0].keys())
 
 print("======== ИНФОРМАЦИЯ О ФАЙЛАХ CSV =========\n")
-print(f"Количество строк в test.csv: {len(dict_test)}")
+
 print(f"Количество строк в train.csv: {len(dict_train)}")
-print(f"Количество заголвоков столбцов в test.csv: {len(dict_test[0].keys())}")
+
 print(f"Количество заголвоков столбцов в train.csv: {len(dict_train[0].keys())}")
-print(f"Заголовки в test.csv : {sorted(list(dict_test[0].keys()))}")   
 print(f"Заголовки в train.csv: {sorted(list(dict_train[0].keys()))}")
-print(f"Равенство заголвоков столбцов в test.csv и train.csv: {sorted(list(dict_test[0].keys())) == sorted(list(dict_train[0].keys()))}\n")
 print(f"Перевод на русский: {list(ru_column.values())}")
 
 
@@ -64,8 +60,8 @@ print(f"Количество женщин : {number_of_female} ({get_procent(num
 print(f" Доля выживших пассажиров: {get_procent(number_of_survived, number_of_people)}\n")
 
 print(f"Общее количество выживших: {number_of_survived} ")
-print(f"Колчиество выживших мужчин {number_of_survived_male} ({get_procent(number_of_survived_male, number_of_survived)} %)")
-print(f"Колчиество выживших женщин {number_of_survived_female} ({get_procent(number_of_survived_female, number_of_survived)} %)")
+print(f"Колчиество выживших мужчин {number_of_survived_male} ({get_procent(number_of_survived_male, number_of_male)} %)")
+print(f"Колчиество выживших женщин {number_of_survived_female} ({get_procent(number_of_survived_female, number_of_female)} %)")
 
 
 print("\n\n======== ЗНАЧЕНИЯ ПРИЗНАКОВ (train.csv) =========\n")
@@ -124,20 +120,4 @@ for k, v in sorted(group_year_range(dict_train, step).items()):
     else:
 
         print(f"От {int(k)} до {int(k+step)}: {v}")
-
-print("====================================")
-print("====================================")
-print("====================================")
-print("\n\n======== TRAIN_CSV  =========\n")
-
-
-print("\n\n======== ЗНАЧЕНИЯ ПРИЗНАКОВ (test.csv) =========\n")
-
-for column in dict_train[0].keys():
-    if column != "Survived":
-        status_set = all_status(dict_test, column)
-        lenth = len(status_set)
-        print(f"Уникальных значениий признака '{column} // {ru_column.get(column, column)} - {lenth}")
-        print(f"Первые 10 значений:")
-        print(*sorted(status_set)[:10],"\n")
 
