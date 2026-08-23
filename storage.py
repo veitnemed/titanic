@@ -49,7 +49,7 @@ def baseline_dict(filename):
         if passenger["Sex"] == "male":
             baseline[passenger["PassengerId"]] = 0
         elif passenger["Sex"] == "female":
-            baseline["PassengerId"] = 1
+            baseline[passenger["PassengerId"]] = 1
             
     return baseline
 

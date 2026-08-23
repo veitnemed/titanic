@@ -1,8 +1,6 @@
 """Модуль отвечает за математику предсказания"""
 
-from config import (first_weights, 
-                              FEATURES,
-                              )
+from config import (FEATURES)
 
 def mean_csv_result(scores_dict: dict) -> float:
     """Считает среднее значение score"""
@@ -14,7 +12,7 @@ def mean_csv_result(scores_dict: dict) -> float:
 def binarize_score(score, threshold) -> int:
     return int(score >= threshold)
 
-def get_score(passenger: dict) -> float:
+def get_score(passenger: dict, weights: dict) -> float:
     """Считаем итоговое значение для одного пассажира"""
     score = 0.0
     for feature in FEATURES:
@@ -22,17 +20,17 @@ def get_score(passenger: dict) -> float:
         if values == "":
           continue
          
-        if ("max_key" in first_weights[feature]) and (int(values) >= first_weights[feature]["max_key"]):
+        if ("max_key" in weights[feature]) and (int(values) >= weights[feature]["max_key"]):
                 score += 0
         else:
-            score += float(first_weights[feature][values])        
+            score += float(weights[feature][values])        
     return score
 
-def create_dict_scores(dataset: dict) -> dict:
+def create_dict_scores(dataset: dict, weights: dict) -> dict:
     """Собирает словарь с предиктом для каждого пасажира"""
     result = {}
     for passenger in dataset:
-        result[passenger["PassengerId"]] = get_score(passenger)
+        result[passenger["PassengerId"]] = get_score(passenger,weights)
     return result
 
 
@@ -66,3 +64,6 @@ def procent_prediction(lenth, number):
 
 def number_of_baseline(baseline_binare: dict, actual_survived: dict) -> int:
     return number_of_prediction(baseline_binare, actual_survived)
+
+# MODEL
+
