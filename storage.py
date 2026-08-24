@@ -2,11 +2,31 @@
 
 import csv
 
-def get_csv_dict(file_name):
+def get_full_csv_list(file_name) -> list[dict]:
     with open(file_name, 'r', encoding='utf-8') as f: 
         data = list(csv.DictReader(f))
     return data
 
+def get_train_csv_lists(filename: str) -> tuple[list, list]:
+    """Рандомно разделяет датасет 80/20"""
+    import random as rnd
+    full_data = get_full_csv_list(filename)
+    train_data = full_data.copy()
+    
+    len_dataset = len(full_data)
+    len_train = int((4/5)*len_dataset)
+    len_test = len_dataset - len_train
+    test_data = []
+    
+    for _ in range(len_test):
+        obj = rnd.choice(train_data)
+        train_data.remove(obj)
+        test_data.append(obj)
+    
+    return train_data , test_data
+        
+    
+    
 def save_csv(d: dict, columns: list, filename: str):
     """Сохранение csv предикта """
     with open(filename, "w", encoding="utf-8", newline="") as f:
@@ -32,17 +52,16 @@ def load_scores(filename: str) -> dict:
 
     return scores
 
-def survived_dict(filename:str) -> dict:
+def survived_dict(data: dict) -> dict:
     """Создаём словарь типа id -> survived"""
     result = {}
-    data = get_csv_dict(filename)
     for idx, d in enumerate(data):
         result[d["PassengerId"]] = int(d["Survived"])
     return result 
 
 def baseline_dict(filename):
     """Создается словарь по логике если пол =  М то 0, иначе 1"""
-    csv_list = get_csv_dict(filename)
+    csv_list = get_full_csv_list(filename)
     baseline = {}
     
     for passenger in csv_list:

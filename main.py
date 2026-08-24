@@ -1,8 +1,14 @@
-from storage import (get_csv_dict, 
+from storage import (get_full_csv_list, 
                      save_csv,
                      survived_dict,
-                     baseline_dict,)
-from config import  (TRAIN, COLUMNS_BINARE, RESULT, first_weights)
+                     baseline_dict, get_train_csv_lists)
+from config import  (TRAIN, 
+                     COLUMNS_BINARE, 
+                     RESULT, 
+                     first_weights,
+                     STEPS_FOR_TRAIN,
+                     NUMBER_OF_ITERATIONS,
+                     THREASHOLD)
 
 from scores import (
                     survived_counter, 
@@ -27,52 +33,37 @@ def show_result_info(binare_dict: dict, actual_survived: dict, mess: str):
     print(f"{mess}: {n} / {lenth} ({p} % правильных)")
     
 
-def show_result_tarino(weights, new_weights, binare_dict: dict, actual_survived: dict, mess: str):
-    print(f"{mess}\n")
-    lenth = len(binare_dict)
-    n_new = number_of_prediction(binare_dict, actual_survived)
-    p = procent_prediction(lenth, n)
-    
-    print(f"Количество правильных предсказаний: {n} из {lenth}")
-    print(f"{p} % правильных, {round(100-p,2)} % ошибок")
-
 def main_func():
-    raw_dict = get_csv_dict(TRAIN)
-    score_dict = create_dict_scores(raw_dict, first_weights)
-    threshold = 1
-    binare_dict = create_dict_binare(score_dict, threshold)
-    save_csv(binare_dict, COLUMNS_BINARE, RESULT)
-    actual_survived = survived_dict(TRAIN)
+    """Главная функция преокта"""
+    raw_dict_train, raw_dict_test  = get_train_csv_lists(TRAIN)
     
-    show_result_info(binare_dict, actual_survived, "Default classifier:")
-    show_main_info_for_traning(score_dict, binare_dict, threshold)
-    print("="*50)
+    score_dict3 = create_dict_scores(raw_dict_train, first_weights)
+    binare_dict3 = create_dict_binare(score_dict3, THREASHOLD)
+    #save_csv(binare_dict, COLUMNS_BINARE, RESULT)
+    actual_survived3 = survived_dict(raw_dict_train)
+    
     baseline = baseline_dict(TRAIN)
-    show_result_info(baseline, actual_survived, "\n\nBaseline: ")
+    show_result_info(baseline, actual_survived3, "\nBaseline")
+    print("="*50)
+    show_result_info(binare_dict3, actual_survived3, "До обучения")
     print("="*50)
     
-    steps = [0.75, 0.5, 0.25, 0.1, 0.05]
-    iters = 1000
+    new_weight, time_train = train_classifier(raw_dict = raw_dict_train,
+                                  actual_survived = actual_survived3,
+                                  weights = first_weights,
+                                  steps = STEPS_FOR_TRAIN,
+                                  iters = NUMBER_OF_ITERATIONS,
+                                  treashold = THREASHOLD)
+    new_score_dict = create_dict_scores(raw_dict_train,new_weight)
+    new_binare_dict1 = create_dict_binare(new_score_dict, THREASHOLD)
+    show_result_info(new_binare_dict1, actual_survived3, "После обучения весов")
+    print(f"Время обучения {time_train} сек.")
     
-    new_weight = train_classifier( raw_dict, actual_survived, first_weights, steps, iters, threshold)
-    score_dict1 = create_dict_scores(raw_dict,new_weight)
-    binare_dict1 = create_dict_binare(score_dict1, threshold)
-    
-    
-    
-    show_main_info_for_traning(score_dict1, binare_dict1, threshold)
-    show_result_info(binare_dict1, actual_survived, "\nResult train weights:")
     print("="*50)
-    print("="*50)
-    threshold_best = best_threshold(raw_dict, actual_survived, 100,new_weight, threshold)
-    new_binare_dict = create_dict_binare(score_dict1,threshold_best)
-    show_main_info_for_traning(score_dict1, new_binare_dict, threshold_best)
-    show_result_info(new_binare_dict, actual_survived, "\nResult train threshold:")
-    
-    
-        
-    
-    
+    score_dict3 = create_dict_scores(raw_dict_test, new_weight)
+    binare_dict3 = create_dict_binare(score_dict3, THREASHOLD)
+    actual_survived3 = survived_dict(raw_dict_test)
+    show_result_info(binare_dict3, actual_survived3, f"Тестовый набор ({len(raw_dict_test)} пас.)")   
 if __name__ == "__main__":
     main_func()
 

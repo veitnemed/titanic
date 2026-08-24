@@ -1,7 +1,7 @@
-from storage import get_csv_dict
+from storage import get_full_csv_list
 from config import TRAIN, CORRELATION_FEATURES
 from features import repalace_feature_values
-data = get_csv_dict(TRAIN)
+data = get_full_csv_list(TRAIN)
 data = repalace_feature_values(data,"Sex",{"female": 1, "male": 0})
 
 # >> 891

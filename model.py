@@ -1,6 +1,7 @@
 import random as rnd
 from scores import number_of_prediction, create_dict_binare, create_dict_scores, mean_csv_result
 from copy import deepcopy
+import time
 
 def evaluate_weights(raw_dict: dict, actual_survived: dict, weights: dict, treashold):
     binare_dict = predict_dataset(raw_dict, weights, treashold)[1]
@@ -75,6 +76,7 @@ def train_classifier(raw_dict: dict,
     "Подбираем лучшие веса для классифкатора"
     new_weights = deepcopy(weights)
 
+    start_time = time.perf_counter()
     for step in steps:
         i = 0
         while i <= iters:
@@ -82,8 +84,10 @@ def train_classifier(raw_dict: dict,
             if new:
                 i = 0
             else:
-                i += 1 
-    return new_weights
+                i += 1
+    end_time = time.perf_counter() 
+    t = round(end_time - start_time,2)
+    return new_weights, t
     
    
         

@@ -9,6 +9,10 @@ CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived"]
 COLUMNS_PREDICT = ["PassengerId", "Score"]
 COLUMNS_BINARE = ["PassengerId", "Survived"]
 
+STEPS_FOR_TRAIN = [0.75, 0.5, 0.25, 0.1, 0.05]
+NUMBER_OF_ITERATIONS = 1000
+THREASHOLD = 1.91
+
 first_weights = {
     "Sex": {
         "female": 0.742,
