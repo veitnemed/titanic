@@ -2,7 +2,10 @@ import random as rnd
 from scores import number_of_prediction, create_dict_binare, create_dict_scores, mean_csv_result
 from copy import deepcopy
 import time
+import math
 
+
+    
 def evaluate_weights(raw_dict: dict, actual_survived: dict, weights: dict, treashold):
     binare_dict = predict_dataset(raw_dict, weights, treashold)[1]
     n = number_of_prediction(binare_dict, actual_survived)/len(binare_dict)

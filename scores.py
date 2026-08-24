@@ -1,6 +1,14 @@
 """Модуль отвечает за математику предсказания"""
 
 from config import (FEATURES)
+import math
+
+
+def log_loss(s: int, p: float) -> float:
+   return -(s*math.log(p) + (1-s)*math.log(1-p))
+
+def sigmoid(predict: float):
+    return 1/(1+pow(math.e,-predict))
 
 def mean_csv_result(scores_dict: dict) -> float:
     """Считает среднее значение score"""
@@ -23,7 +31,7 @@ def get_score(passenger: dict, weights: dict) -> float:
         if ("max_key" in weights[feature]) and (int(values) >= weights[feature]["max_key"]):
                 score += 0
         else:
-            score += float(weights[feature][values])        
+            score += float(weights[feature][values])      
     return score
 
 def create_dict_scores(dataset: dict, weights: dict) -> dict:
