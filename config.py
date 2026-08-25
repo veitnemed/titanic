@@ -9,47 +9,43 @@ CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived"]
 COLUMNS_PREDICT = ["PassengerId", "Score"]
 COLUMNS_BINARE = ["PassengerId", "Survived"]
 
-STEPS_FOR_TRAIN = [0.75, 0.5, 0.25, 0.1, 0.05]
+STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.1, 0.05, 0.001]
 NUMBER_OF_ITERATIONS = 1000
-THREASHOLD = 2
+THREASHOLD = 0.5
 
 first_weights = {
     "Sex": {
-        "female": 0.742,
-        "male": 0.189
+        "female": -2,
+        "male": -4.5,
     },
     "SibSp": {
-        "0": 0.345,
-        "1": 0.536,
-        "2": 0.464,
-        "3": 0.25,
-        "4": 0.167,
-        "5": 0,
-        "6": 0,
-        "7": 0,
-        "8": 0,
-        "max_key": 8
+        "0": 0.9,
+        "1": 1.2,
+        "2": 0.9,
+        "3": -0.9,
+        "4": 0,
+        "5": -1.7,
+        "8": -2.6
 
     },
     "Parch": {
-        "0": 0.341,
-        "1": 0.551,
-        "2": 0.5,
-        "3": 0.6,
-        "4": 0,
-        "5": 0.2,
-        "6": 0,
-        "max_key": 6
+        "0": 3,
+        "1": 4,
+        "2": 4,
+        "3": 5,
+        "4": 0.25,
+        "5": 1.85,
+        "6": 1.24,
     },
     "Pclass": {
-        "1": 0.63,
-        "2": 0.473,
-        "3": 0.242
+        "1": 0,
+        "2": -0.6,
+        "3": -1.608
     },
     "Embarked": {
-        "Q": 0.39,
-        "S": 0.337,
-        "C": 0.554
+        "Q": 0.24,
+        "S": -0.313,
+        "C": 0
     }
 
 }

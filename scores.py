@@ -5,11 +5,17 @@ import math
 
 
 def log_loss(s: int, p: float) -> float:
-   return -(s*math.log(p) + (1-s)*math.log(1-p))
+    """Ошибка для одного пассажира"""
+    p = max(min(p,0.999),0.001)
+    
+    return -(s*math.log(p) + (1-s)*math.log(1-p))
+
 
 def sigmoid(predict: float):
     return 1/(1+pow(math.e,-predict))
 
+def scores_to_sigmoids(scores: dict) -> dict:
+    return dict((id,sigmoid(score)) for id, score in scores.items())
 def mean_csv_result(scores_dict: dict) -> float:
     """Считает среднее значение score"""
     result = 0.0
@@ -28,11 +34,12 @@ def get_score(passenger: dict, weights: dict) -> float:
         if values == "":
           continue
          
-        if ("max_key" in weights[feature]) and (int(values) >= weights[feature]["max_key"]):
+        if values not in weights[feature]:
                 score += 0
         else:
             score += float(weights[feature][values])      
     return score
+
 
 def create_dict_scores(dataset: dict, weights: dict) -> dict:
     """Собирает словарь с предиктом для каждого пасажира"""
@@ -41,9 +48,7 @@ def create_dict_scores(dataset: dict, weights: dict) -> dict:
         result[passenger["PassengerId"]] = get_score(passenger,weights)
     return result
 
-
-
-def create_dict_binare(dataset: dict, threshold: float) -> dict:
+def create_dict_binary(dataset: dict, threshold: float) -> dict:
     """Собирает словарь бинарными значениями для каждого пасажира"""
     result = {}
     for id, score in dataset.items():
@@ -65,7 +70,7 @@ def number_of_prediction(binare_dict: dict, survived_dict: dict) -> int:
         counter += int(binare_dict[id] == _is_survived)
     return counter
 
-def procent_prediction(lenth, number):
+def percent_prediction(lenth, number):
     return round(100*(number/lenth),2)
 
 #BASELINE

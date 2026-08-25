@@ -69,3 +69,19 @@ for _ in range(1000):
         mutations += 1
 
 print (f"Mutations: {mutations}")
+
+def best_threshold(raw_list: list, 
+                   actual_survived: dict, 
+                   steps: int, 
+                   train_weights: dict, 
+                   start_threashold) :
+  
+    best_threshold = start_threashold
+    beast_evaluate = 0
+    range_values = float_range(start_threashold - start_threashold/2, start_threashold + start_threashold/2, steps,3)
+    for value in range_values:
+        evaluate = evaluate_weights(raw_list, actual_survived, train_weights, value)
+        if evaluate > beast_evaluate:
+            beast_evaluate = evaluate
+            best_threshold = value
+    return best_threshold

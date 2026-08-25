@@ -59,9 +59,8 @@ def survived_dict(data: dict) -> dict:
         result[d["PassengerId"]] = int(d["Survived"])
     return result 
 
-def baseline_dict(filename):
+def baseline_dict(csv_list):
     """Создается словарь по логике если пол =  М то 0, иначе 1"""
-    csv_list = get_full_csv_list(filename)
     baseline = {}
     
     for passenger in csv_list:

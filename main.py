@@ -1,10 +1,7 @@
-from storage import (get_full_csv_list, 
-                     save_csv,
+from storage import (
                      survived_dict,
                      baseline_dict, get_train_csv_lists)
 from config import  (TRAIN, 
-                     COLUMNS_BINARE, 
-                     RESULT, 
                      first_weights,
                      STEPS_FOR_TRAIN,
                      NUMBER_OF_ITERATIONS,
@@ -13,70 +10,89 @@ from config import  (TRAIN,
 from scores import (
                     survived_counter, 
                     number_of_prediction,
-                    procent_prediction,
-                    mean_csv_result, create_dict_scores, create_dict_binare)
+                    percent_prediction,
+                    create_dict_scores, create_dict_binary, scores_to_sigmoids)
 
-from model import predict_dataset, evaluate_weights, train_classifier, best_threshold
+from model import train_classifier, calculate_mean_loss
+import os
 
-def show_main_info_for_traning(score_dict: dict, binare_dict: dict, mean_score: float):
+def show_main_info_for_training(scores: dict, binary: dict, mean_score: float):
     """Выводится основная информация о прогнозе"""
     print(f"Threshold: {round(mean_score,2)}")
-    print("Min score:", round(min(list(score_dict.values())),2))
-    print("Max score:", round(max(list(score_dict.values())),2))
-    print(f"Количество выживших по предсказанию: {survived_counter(binare_dict)}")
+    print("Min score:", round(min(list(scores.values())),2))
+    print("Max score:", round(max(list(scores.values())),2))
+    print(f"Количество выживших по предсказанию: {survived_counter(binary)}")
     
-def show_result_info(binare_dict: dict, actual_survived: dict, mess: str, time_proccessing = None):
+def show_result_info(binary: dict, 
+                     survived: dict, 
+                     message: str, 
+                     time_processing = None):
     print("="*50)
-    lenth = len(binare_dict)
-    n = number_of_prediction(binare_dict, actual_survived)
-    p = procent_prediction(lenth, n)
-    print(f"{mess}: {n} / {lenth} ({p} % правильных)")
-    if time_proccessing != None:
-        print(f"\nВремя обучения {time_proccessing} сек.") 
+    length = len(binary)
+    n = number_of_prediction(binary, survived)
+    percent = percent_prediction(length, n)
+    print(f"{message}: {n} / {length} ({percent} % правильных)")
+    if time_processing != None:
+        print(f"\nВремя обучения {time_processing} сек.") 
 
-def result(raw_dict: dict, wights: dict, actual_survived, mes: str, time_procesing = None):
-    if isinstance(raw_dict,list):
-        new_score_dict = create_dict_scores(raw_dict, wights)
-        new_binare_dict = create_dict_binare(new_score_dict, THREASHOLD)
-    else:
-        new_binare_dict = raw_dict
-    show_result_info(new_binare_dict, actual_survived, mes, time_procesing)
+def result(raw_list: list, 
+           weights: dict, 
+           survived, 
+           message: str, 
+           time_processing = None):
+    scores = create_dict_scores(raw_list, weights)
+    binary = create_dict_binary(scores_to_sigmoids(scores), THREASHOLD)
+    show_result_info(binary, survived, message, time_processing)
+    maean_loss = calculate_mean_loss(raw_list, survived, weights)
+    print(f"Mean loss: {round(maean_loss,2)}")
+    
+def show_weights(weights, new_weights):
+    
+    for feature, val in weights.items():
+        print(f"{feature}: ")
+        for k, v in val.items():
+            v1 = new_weights[feature][k]
+            if k == "max_key":
+                continue
+            if abs(v-v1) < 0.0001:
+                print(f"{k}: {v} (без изменений)")
+                continue
+            print(f"{k}: {v} -> {round(v1,2)}")
+    
     
 def main_func():
     """Главная функция преокта"""
     
-    raw_dict_train, raw_dict_test  = get_train_csv_lists(TRAIN)
-    actual_survived = survived_dict(raw_dict_train)
-    baseline = baseline_dict(TRAIN)
-    actual_survived_test = survived_dict(raw_dict_test)
+    train, test  = get_train_csv_lists(TRAIN)
+    survived = survived_dict(train)
+    baseline = baseline_dict(train)
+    survived_test = survived_dict(test)
     
-    result(raw_dict = baseline,
-           wights = first_weights,
-           actual_survived = actual_survived,
-           mes = "Бейслайн")
-    
-    result(raw_dict = raw_dict_train,
-           wights = first_weights,
-           actual_survived = actual_survived,
-           mes = "До обучения")
-
-    new_weight, time_train = train_classifier(raw_dict = raw_dict_train,
-                                  actual_survived = actual_survived,
+    show_result_info(binary = baseline,
+                    survived = survived,
+                    message = "Baseline")
+    result(raw_list = train,
+           weights = first_weights,
+           survived = survived,
+           message = "До обучения")
+    new_weights, time_train = train_classifier(raw_list = train,
+                                  actual = survived,
                                   weights = first_weights,
                                   steps = STEPS_FOR_TRAIN,
-                                  iters = NUMBER_OF_ITERATIONS,
-                                  treashold = THREASHOLD)
-    result( raw_dict = raw_dict_train,
-            wights = new_weight,
-            actual_survived = actual_survived,
-            mes = "После обучения весов",
-            time_procesing = time_train)
+                                  iters = NUMBER_OF_ITERATIONS)
+    result(raw_list = train,
+           weights = new_weights,
+           survived = survived,
+           message = "После обучения весов",
+           time_processing = time_train)
+    result(raw_list = test,
+           weights = new_weights,
+           survived = survived_test,
+           message = "Тестовый набор")
     
-    result( raw_dict = raw_dict_test,
-            wights = new_weight,
-            actual_survived = actual_survived_test,
-            mes = "Тестовый набор")
+    show_weights(first_weights, new_weights)
     
 if __name__ == "__main__":
+    os.system("cls")
     main_func()
 
