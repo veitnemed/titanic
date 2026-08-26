@@ -14,6 +14,15 @@ def log_loss(s: int, p: float) -> float:
 def sigmoid(predict: float):
     return 1/(1+pow(math.e,-predict))
 
+def summ_weights(wights: dict) -> float:
+    """Считает сумму весов"""
+    res = 0
+    for category, features in wights.items():
+        for value in features.values():
+            res += value
+    return res
+
+
 def scores_to_sigmoids(scores: dict) -> dict:
     return dict((id,sigmoid(score)) for id, score in scores.items())
 def mean_csv_result(scores_dict: dict) -> float:

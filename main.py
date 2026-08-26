@@ -11,7 +11,10 @@ from scores import (
                     survived_counter, 
                     number_of_prediction,
                     percent_prediction,
-                    create_dict_scores, create_dict_binary, scores_to_sigmoids)
+                    create_dict_scores, 
+                    create_dict_binary, 
+                    scores_to_sigmoids,
+                    summ_weights)
 
 from model import train_classifier, calculate_mean_loss
 import os
@@ -43,17 +46,18 @@ def result(raw_list: list,
     scores = create_dict_scores(raw_list, weights)
     binary = create_dict_binary(scores_to_sigmoids(scores), THREASHOLD)
     show_result_info(binary, survived, message, time_processing)
+    print()
     maean_loss = calculate_mean_loss(raw_list, survived, weights)
-    print(f"Mean loss: {round(maean_loss,2)}")
+    print(f"Loss: {round(maean_loss,2)}")
+    print(f"Сумма весов: {round(summ_weights(weights),2)}")
     
 def show_weights(weights, new_weights):
     
     for feature, val in weights.items():
+        print("="*50)
         print(f"{feature}: ")
         for k, v in val.items():
             v1 = new_weights[feature][k]
-            if k == "max_key":
-                continue
             if abs(v-v1) < 0.0001:
                 print(f"{k}: {v} (без изменений)")
                 continue
@@ -63,23 +67,24 @@ def show_weights(weights, new_weights):
 def main_func():
     """Главная функция преокта"""
     
-    train, test  = get_train_csv_lists(TRAIN)
+    train, test  = get_train_csv_lists(TRAIN, seed_value = 5)
     survived = survived_dict(train)
     baseline = baseline_dict(train)
     survived_test = survived_dict(test)
-    
+    new_weights, time_train = train_classifier(raw_list = train,
+                                      actual = survived,
+                                      weights = first_weights,
+                                      steps = STEPS_FOR_TRAIN,
+                                      iters = NUMBER_OF_ITERATIONS)
     show_result_info(binary = baseline,
                     survived = survived,
                     message = "Baseline")
+    print()
     result(raw_list = train,
            weights = first_weights,
            survived = survived,
            message = "До обучения")
-    new_weights, time_train = train_classifier(raw_list = train,
-                                  actual = survived,
-                                  weights = first_weights,
-                                  steps = STEPS_FOR_TRAIN,
-                                  iters = NUMBER_OF_ITERATIONS)
+    
     result(raw_list = train,
            weights = new_weights,
            survived = survived,
@@ -95,4 +100,5 @@ def main_func():
 if __name__ == "__main__":
     os.system("cls")
     main_func()
+    
 

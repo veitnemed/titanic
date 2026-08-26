@@ -9,8 +9,8 @@ def float_range(start: float, end: float, steps: int, round_value: int) -> list[
     return [round(start + i*((end - start)/steps), round_value) for i in range(steps)]
 
 def calculate_mean_loss(raw_list: list,
-                     survived: dict,
-                     weights: dict):
+                        survived: dict,
+                        weights: dict):
     sum_loss = 0
     length = len(raw_list)
     scores = create_dict_scores(raw_list, weights)
@@ -41,18 +41,15 @@ def select_weights(raw_list: list,
     
 def create_new_weights(weights: dict, step: float) -> dict:
     """Возвращает новый словарь с весами, одно значение которого увеличилось или уменьшилась на step"""
+    rng = rnd.Random()
+    rng2 = rnd.Random()
     weights_copy = deepcopy(weights)
     all_features = [
     (feature, value)
     for feature, values in weights.items()
-    for value in values
-    if value != "max_key"]
-    feature1, value1 = rnd.choice(all_features)
-    all_features.remove((feature1, value1))
-    feature2, value2 = rnd.choice(all_features)
-    weights_copy[feature1][value1] += step
-    feature2, value2 = rnd.choice(all_features)
-    weights_copy[feature2][value2] -= step
+    for value in values]
+    feature1, value1 = rng.choice(all_features)
+    weights_copy[feature1][value1] += step*rng2.choice([-1,1])
     return weights_copy
 
 def train_classifier(raw_list: list, 
@@ -66,12 +63,18 @@ def train_classifier(raw_list: list,
     start_time = time.perf_counter()
     for step in steps:
         i = 0
+        k = 0
+        c = 0
         while i <= iters:
             new_weights, new = select_weights(raw_list, actual,  new_weights, step)
-            if new:
+            if new is True:
                 i = 0
+                c += 1
             else:
                 i += 1
+            k +=1
+            
+        print(f"Step {step} compite. {k} iterations {c} mutations\n")
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)
     return new_weights, t
