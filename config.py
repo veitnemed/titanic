@@ -1,7 +1,9 @@
 "Глобальные константы, "
-
-RESULT = "C:/Users/super/Desktop/vscode projects/titanic/output_data/result_train_binare.csv"
-TRAIN  = 'C:/Users/super/Desktop/vscode projects/titanic/datasets/train.csv'
+import os 
+dirname = os.path.dirname(__file__)
+TRAIN = os.path.join(dirname, "datasets/train.csv")
+RESULT = os.path.join(dirname, "output_data/result_train_binare.csv")
+WEIGHTS = os.path.join(dirname,"weights.json")
 
 
 CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived"]
@@ -12,47 +14,49 @@ COLUMNS_BINARE = ["PassengerId", "Survived"]
 STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.1, 0.075, 0.05, 0.025]
 NUMBER_OF_ITERATIONS = 500
 THREASHOLD = 0.5
+SEED_SPLIT = 10
 
-first_weights = {
+DEFAULT_WEIGHTS = {
     "Sex": {
-        "female": 1,
-        "male": 1,
+        "female": 0,
+        "male": 0,
     },
     "SibSp": {
-        "0": 1,
-        "1": 1,
-        "2": 1,
-        "3": 1,
-        "4": 1,
-        "5": 1,
-        "8": 1
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "8": 0
 
     },
     "Parch": {
-        "0": 1,
-        "1": 1,
-        "2": 1,
-        "3": 1,
-        "4": 1,
-        "5": 1,
-        "6": 1,
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
     },
     "Pclass": {
-        "1": 1,
-        "2": 1,
-        "3": 1
+        "1": 0,
+        "2": 0,
+        "3": 0
     },
     "Embarked": {
-        "Q": 1,
-        "S": 1,
-        "C": 1
-    }
+        "Q": 0,
+        "S": 0,
+        "C": 0
+    },
+    "Bias": {"bias": 0}
 
 }
 
 
 
-FEATURES = list(first_weights.keys())
+FEATURES = list(DEFAULT_WEIGHTS.keys())
 
 ru_column = {
     "Age": "Возраст пассажира",

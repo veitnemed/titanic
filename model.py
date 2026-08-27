@@ -58,9 +58,14 @@ def train_classifier(raw_list: list,
                      steps: float, 
                      iters: int) -> tuple[dict, float]:
     "Подбираем лучшие веса для классифкатора"
+    
+    
+    row_format = "{:<20} {:<20} {:<20}"
     new_weights = deepcopy(weights)
 
     start_time = time.perf_counter()
+    
+    print(row_format.format(*["Step","Attempts","Accepted"]))
     for step in steps:
         i = 0
         k = 0
@@ -74,7 +79,7 @@ def train_classifier(raw_list: list,
                 i += 1
             k +=1
             
-        print(f"Step {step} compite. {k} iterations {c} mutations\n")
+        print(row_format.format(*[round(step,3),k,c]))
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)
     return new_weights, t

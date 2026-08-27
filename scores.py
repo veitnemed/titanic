@@ -39,10 +39,14 @@ def get_score(passenger: dict, weights: dict) -> float:
     """Считаем итоговое значение для одного пассажира"""
     score = 0.0
     for feature in FEATURES:
+        if feature == "Bias":
+            score += weights["Bias"]["bias"]
+            continue
+        
         values = passenger[feature]
         if values == "":
           continue
-         
+        
         if values not in weights[feature]:
                 score += 0
         else:
@@ -55,7 +59,9 @@ def create_dict_scores(dataset: dict, weights: dict) -> dict:
     result = {}
     for passenger in dataset:
         result[passenger["PassengerId"]] = get_score(passenger,weights)
+        
     return result
+
 
 def create_dict_binary(dataset: dict, threshold: float) -> dict:
     """Собирает словарь бинарными значениями для каждого пасажира"""

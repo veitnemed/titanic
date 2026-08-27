@@ -1,7 +1,10 @@
 "Модуль отвечает за работу с файлами"
 
 import csv
-
+import os 
+import json 
+    
+    
 def get_full_csv_list(file_name) -> list[dict]:
     with open(file_name, 'r', encoding='utf-8') as f: 
         data = list(csv.DictReader(f))
@@ -73,5 +76,26 @@ def baseline_dict(csv_list):
             
     return baseline
 
+def file_exists(filename: str):
+    """Проверка существует ли файл"""
+    return os.path.isfile(filename)
+
+def create_json(filename, default_weights):
+    with open(filename, 'w', encoding="utf-8") as f:
+        json.dump(default_weights, f) 
+
+def load_json(filename: str):
+    with open(filename, 'r', encoding="utf-8") as f:
+        weights = json.load(f)
+    return weights
+
+def save_json(filename: str, weights: dict):
+    with open(filename, 'w', encoding="utf-8") as f:
+        json.dump(weights, f, indent=3)
+
+def json_init(filename: str, default_weights: dict):
+    
+    if file_exists(filename) is False:
+        create_json(filename, default_weights)
 
 
