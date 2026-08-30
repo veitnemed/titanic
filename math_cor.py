@@ -1,12 +1,12 @@
 from storage import get_full_csv_list
 from config import TRAIN, CORRELATION_FEATURES
-from features import repalace_feature_values
+from features import replace_feature_values, get_column_in_matrix, replace_median_ages
 data = get_full_csv_list(TRAIN)
-data = repalace_feature_values(data,"Sex",{"female": 1, "male": 0})
-
+data = replace_feature_values(data,"Sex",{"female": 1, "male": 0})
+data = replace_median_ages(data)
 # >> 891
 
-features = list(data[0].keys())
+
 # >> ['PassengerId', 'Pclass', 'Name', 'Sex', 'Age', 'SibSp', 'Parch', 'Ticket', 'Fare', 'Cabin', 'Embarked']
 
 def filter_valid_pairs(values1: list, values2: list) -> tuple[list, list]:
@@ -19,9 +19,6 @@ def filter_valid_pairs(values1: list, values2: list) -> tuple[list, list]:
         res_2.append(v2)
     return (res_1, res_2)
 
-def get_column_in_matrix(data: list, feature: str) -> list:
-    "Получаем список значений столбца feature (НЕ СТРОКА) "
-    return [passenger[feature] for passenger in data]
 
 def mean_value(features_list: list) -> float:
     "Считаем среднее зачение признака feature, нап. Survived,Pclass"
@@ -54,7 +51,7 @@ def standart_diviation(values: list):
     
     return pow(res/length, 0.5)
 
-def get_cor_coef(column1: str, column2: str):
+def get_cor_coef(column1: str, column2: str, data: list):
     """"""
     values_1 = get_column_in_matrix(data, column1); values_2 = get_column_in_matrix(data, column2)
     filt_values_1, filt_values_2 = filter_valid_pairs(values_1, values_2)
@@ -64,25 +61,25 @@ def get_cor_coef(column1: str, column2: str):
 
 
 
-def cor_marix() -> list:
+def cor_marix(data) -> list:
 
     result = []
     for i in range(len(CORRELATION_FEATURES )):
         row = []
         for j in range(len(CORRELATION_FEATURES)):
-            row.append(round(get_cor_coef(CORRELATION_FEATURES[i], CORRELATION_FEATURES[j])[0],2))
+            row.append(round(get_cor_coef(CORRELATION_FEATURES[i], CORRELATION_FEATURES[j],data)[0],2))
         result.append(row)
     return result
 
 def print_matrix(data: list):
-    print(" ", end='\t')
-    for name in CORRELATION_FEATURES:
-        print(name, end = "\t")
     print()
-
+    print("{:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}".format(*[" ", *CORRELATION_FEATURES]), "\n")
     for i in range(len(data)):
-        print(CORRELATION_FEATURES[i], end ='\t')
+        row = []
+        row.append(CORRELATION_FEATURES[i])
+
         for j in range(len(data)):
-            print(data[i][j], end = "\t")
-        print()
+            row.append(data[i][j])
+        
+        print("{:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10} {:<10}".format(*row), "\n")
             

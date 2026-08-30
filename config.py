@@ -5,16 +5,15 @@ TRAIN = os.path.join(dirname, "datasets/train.csv")
 RESULT = os.path.join(dirname, "output_data/result_train_binare.csv")
 WEIGHTS = os.path.join(dirname,"weights.json")
 
+STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125, 0.05, 0.01]
+NUMBER_OF_ITERATIONS = 100
+THREASHOLD = 0.5
+SEED_SPLIT = 42
 
-CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived"]
+CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
 
 COLUMNS_PREDICT = ["PassengerId", "Score"]
 COLUMNS_BINARE = ["PassengerId", "Survived"]
-
-STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.1, 0.075, 0.05, 0.025]
-NUMBER_OF_ITERATIONS = 500
-THREASHOLD = 0.5
-SEED_SPLIT = 10
 
 DEFAULT_WEIGHTS = {
     "Sex": {
@@ -50,10 +49,18 @@ DEFAULT_WEIGHTS = {
         "S": 0,
         "C": 0
     },
+    "Age":
+        {
+            "6": 0,
+            "18": 0,
+            "45": 0,
+            "100": 0
+        },
     "Bias": {"bias": 0}
 
 }
 
+AGE_VALUES = list(map(int,list(DEFAULT_WEIGHTS["Age"].keys())))
 
 
 FEATURES = list(DEFAULT_WEIGHTS.keys())

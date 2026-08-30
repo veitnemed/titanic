@@ -1,8 +1,15 @@
 """Модуль отвечает за математику предсказания"""
 
-from config import (FEATURES)
+from config import FEATURES
 import math
+from config import AGE_VALUES
 
+def add_column_from_dataset(dataset: list, col_dict: dict, name: str) -> list:
+    from copy import deepcopy
+    dataset_copy = deepcopy(dataset)
+    for obj in dataset_copy:
+        obj[name] = col_dict[int(obj["PassengerId"])]
+    return dataset_copy
 
 def log_loss(s: int, p: float) -> float:
     """Ошибка для одного пассажира"""
@@ -22,6 +29,10 @@ def summ_weights(wights: dict) -> float:
             res += value
     return res
 
+def age_in_group(age,ages):
+    for a in ages:
+        if float(age) < a:
+            return a
 
 def scores_to_sigmoids(scores: dict) -> dict:
     return dict((id,sigmoid(score)) for id, score in scores.items())
@@ -42,8 +53,12 @@ def get_score(passenger: dict, weights: dict) -> float:
         if feature == "Bias":
             score += weights["Bias"]["bias"]
             continue
-        
         values = passenger[feature]
+        if feature == "Age":
+            values = str(age_in_group(passenger[feature], AGE_VALUES))
+            
+        
+        
         if values == "":
           continue
         

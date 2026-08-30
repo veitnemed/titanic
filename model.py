@@ -12,12 +12,25 @@ def calculate_mean_loss(raw_list: list,
                         survived: dict,
                         weights: dict):
     sum_loss = 0
+    
     length = len(raw_list)
     scores = create_dict_scores(raw_list, weights)
     for id, score in scores.items():
         sum_loss += log_loss(survived[id], sigmoid(score))
 
     return sum_loss/length
+
+def create_dict_loss(raw_list: list,
+                        survived: dict,
+                        weights: dict):
+    res = {}
+    
+    length = len(raw_list)
+    scores = create_dict_scores(raw_list, weights)
+    for id, score in scores.items():
+        res[int(id)] = log_loss(survived[id], sigmoid(score))
+
+    return res
 
 def predict_dataset(raw_list: list, weights: dict, threshold: float)-> tuple:
     """Инциализация стартовых словарей"""
@@ -41,17 +54,22 @@ def select_weights(raw_list: list,
     
 def create_new_weights(weights: dict, step: float) -> dict:
     """Возвращает новый словарь с весами, одно значение которого увеличилось или уменьшилась на step"""
-    rng = rnd.Random()
-    rng2 = rnd.Random()
+    
     weights_copy = deepcopy(weights)
     all_features = [
     (feature, value)
     for feature, values in weights.items()
     for value in values]
-    feature1, value1 = rng.choice(all_features)
-    weights_copy[feature1][value1] += step*rng2.choice([-1,1])
+    feature1, value1 = rnd.choice(all_features)
+    weights_copy[feature1][value1] += step*rnd.choice([-1,1])
     return weights_copy
 
+def train_steps(raw_list: list, 
+                     actual: dict, 
+                     weights: dict, 
+                     steps: float, 
+                     iters: int) -> tuple[dict, float]:
+    return
 def train_classifier(raw_list: list, 
                      actual: dict, 
                      weights: dict, 

@@ -7,6 +7,25 @@ def all_status(train_dataset: list, feature: str) -> set:
         values_set.add(passenger[feature])
     return values_set
 
+def survived_in_range(train_dataset: list, ages):
+    
+    from collections import defaultdict
+    
+    counter = defaultdict(int)
+    survived = defaultdict(int)
+    for passenger in train_dataset:
+        age = float(passenger["Age"])
+        for r in ages:
+            
+            if age < r:
+                counter[r] += 1
+                if passenger['Survived'] == "1":
+                    survived[r] += 1
+                break
+        
+    return (counter, survived)
+                
+
 def survived_in_group(train_dataset: list, feature: str, value: str) -> tuple:
     """Функция возврщает колчиество выживших, которые соотвествуют признаку feature"""
 
@@ -20,7 +39,7 @@ def survived_in_group(train_dataset: list, feature: str, value: str) -> tuple:
                 
     return (count_passengers, count_survived_passengers)
 
-def group_year_range(train_dataset, step_year=10) -> dict:
+def group_year_range(train_dataset, step_year=5) -> dict:
     """Функция подсчитывает количество человек в разныъ возрастных группах с шагом step_year
         0 - 10 
         10-20
@@ -40,6 +59,7 @@ def group_year_range(train_dataset, step_year=10) -> dict:
             stat_dict[-1] +=1
 
     return stat_dict
+
 
 def empty_value_counter(train_dataset: list, feature: str) -> int:
     """Подсчёт количества пустых значений для призанка feature по всем пассажирам"""

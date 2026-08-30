@@ -5,7 +5,7 @@ import csv
 from funcs_for_information import (all_status, 
                                    survived_in_group, 
                                    group_year_range, 
-                                   empty_value_counter)
+                                   empty_value_counter, survived_in_range)
 import os
 import sys
 
@@ -13,7 +13,7 @@ root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
-
+from features import replace_median_ages
 # __file__ - текущий файл (information.py)
 # os.path.dirname(__file__) - путь к папке
 # >> c:\Users\super\Desktop\vscode projects\titanic\info_data
@@ -29,6 +29,7 @@ from config import (ru_column,
 with open(TRAIN, 'r', encoding='utf-8') as f1:
     dict_train = list(csv.DictReader(f1))
 os.system("cls")
+dict_train = replace_median_ages(dict_train)
 features = list(dict_train[0].keys())
 
 print("======== ИНФОРМАЦИЯ О ФАЙЛАХ CSV =========\n")
@@ -113,7 +114,7 @@ for x in parch:
 
 
 print("\n\n======== РАСПРЕДЕЛЕНИЕ ПО ВОЗРАСТУ  =========\n")
-step = 10
+step = 20
 for k, v in sorted(group_year_range(dict_train, step).items()):
     if k == -1:
         print(f"Неизвестен возраст: {v}")
@@ -121,3 +122,14 @@ for k, v in sorted(group_year_range(dict_train, step).items()):
 
         print(f"От {int(k)} до {int(k+step)}: {v}")
 
+
+print("\n\n======== ВЫЖИВАЕМОСТЬ ПО ВОЗРАСТУ  =========\n")
+
+ages = [20,100]
+
+
+counter_ages, survived_ages = survived_in_range(dict_train,ages)
+
+for group, amount in sorted(counter_ages.items()):
+    p = round(100*survived_ages[group]/amount,2)
+    print(f"Группа {group}: {amount} чел. // Выжило: {p} %")
