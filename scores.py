@@ -53,12 +53,15 @@ def get_score(passenger: dict, weights: dict) -> float:
         if feature == "Bias":
             score += weights["Bias"]["bias"]
             continue
+        if feature == "Male & zero":
+            if  passenger["Parch"] == '0' and passenger["SibSp"] == '0':
+                score += weights["Male & zero"]["Male & zero"]
+            continue
+            
         values = passenger[feature]
         if feature == "Age":
             values = str(age_in_group(passenger[feature], AGE_VALUES))
             
-        
-        
         if values == "":
           continue
         

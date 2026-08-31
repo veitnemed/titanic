@@ -8,7 +8,7 @@ WEIGHTS = os.path.join(dirname,"weights.json")
 STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125, 0.05, 0.01]
 NUMBER_OF_ITERATIONS = 100
 THREASHOLD = 0.5
-SEED_SPLIT = 42
+SEED_SPLIT = 43
 
 CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
 
@@ -56,10 +56,13 @@ DEFAULT_WEIGHTS = {
             "45": 0,
             "100": 0
         },
+        "Male & zero": {
+      "Male & zero": 0
+   },
     "Bias": {"bias": 0}
 
 }
-
+#del DEFAULT_WEIGHTS["Male & zero"]
 AGE_VALUES = list(map(int,list(DEFAULT_WEIGHTS["Age"].keys())))
 
 

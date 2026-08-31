@@ -13,7 +13,7 @@ def get_full_csv_list(file_name) -> list[dict]:
 def get_train_csv_lists(filename: str, seed_value = 1) -> tuple[list, list]:
     """Рандомно разделяет датасет 80/20"""
     import random as rnd
-    rng = rnd.Random(seed_value)
+    rnd.Random(seed_value)
     
     full_data = get_full_csv_list(filename)
     train_data = full_data.copy()
@@ -24,7 +24,7 @@ def get_train_csv_lists(filename: str, seed_value = 1) -> tuple[list, list]:
     test_data = []
     
     for _ in range(len_test):
-        obj = rng.choice(train_data)
+        obj = rnd.choice(train_data)
         train_data.remove(obj)
         test_data.append(obj)
     

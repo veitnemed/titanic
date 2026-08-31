@@ -82,12 +82,18 @@ def show_main_info(train,test,seed):
     print(f"Validation: {len(test)} passengers\n\n")
 
 def show_top_n_error(train: list, survived: dict, new_weights: dict, n: int):
+    import pandas as pd
+    df = pd.read_csv(TRAIN)
+    df = df.reset_index()
+    df = df.drop(labels = ["Name", "Ticket", "Cabin","index"], axis = 1)
     print(f'TOP LOSS (top {n})')
     dict_loss = create_dict_loss(train, survived, new_weights)
     
     for idx, item in enumerate(sorted(dict_loss.items(), key = lambda t: -t[1])):
-        id,loss = item
-        print(f"ID {id}: {round(loss,3)}")
+        id, loss = item
+        mask = [x == id for x in df["PassengerId"] ]
+        print(f"{id} - {round(loss,3)}")
+        print(df.loc[mask], '\n')
         if idx == n - 1:
             return 
 
@@ -156,7 +162,7 @@ def main_func():
     
     #show_weights(weights, new_weights)
     print_is_uppdate_weights(start_loss, new_loss)
-    show_top_n_error(train, survived, new_weights, 10)
+    show_top_n_error(train, survived, new_weights, 20)
    
     #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})
     #new_data = replace_median_ages(new_data)

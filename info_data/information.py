@@ -1,6 +1,7 @@
 "Вывод основной информации о датасетах"
 
 import csv
+import pandas as pd
 
 from funcs_for_information import (all_status, 
                                    survived_in_group, 
@@ -28,6 +29,9 @@ from config import (ru_column,
 
 with open(TRAIN, 'r', encoding='utf-8') as f1:
     dict_train = list(csv.DictReader(f1))
+data_fd = pd.read_csv(TRAIN)
+l = len(data_fd)
+print(l)
 os.system("cls")
 dict_train = replace_median_ages(dict_train)
 features = list(dict_train[0].keys())
