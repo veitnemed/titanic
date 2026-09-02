@@ -1,8 +1,7 @@
 """Модуль отвечает за математику предсказания"""
 
-from config import FEATURES
+
 import math
-from config import AGE_VALUES
 
 def add_column_from_dataset(dataset: list, col_dict: dict, name: str) -> list:
     from copy import deepcopy
@@ -36,6 +35,7 @@ def age_in_group(age,ages):
 
 def scores_to_sigmoids(scores: dict) -> dict:
     return dict((id,sigmoid(score)) for id, score in scores.items())
+
 def mean_csv_result(scores_dict: dict) -> float:
     """Считает среднее значение score"""
     result = 0.0
@@ -46,10 +46,10 @@ def mean_csv_result(scores_dict: dict) -> float:
 def binarize_score(score, threshold) -> int:
     return int(score >= threshold)
 
-def get_score(passenger: dict, weights: dict) -> float:
+def get_score(passenger: dict, weights: dict, features_list: list, age_values = None) -> float:
     """Считаем итоговое значение для одного пассажира"""
     score = 0.0
-    for feature in FEATURES:
+    for feature in features_list:
         if feature == "Bias":
             score += weights["Bias"]["bias"]
             continue
@@ -60,7 +60,7 @@ def get_score(passenger: dict, weights: dict) -> float:
             
         values = passenger[feature]
         if feature == "Age":
-            values = str(age_in_group(passenger[feature], AGE_VALUES))
+            values = str(age_in_group(passenger[feature], age_values))
             
         if values == "":
           continue
@@ -72,11 +72,11 @@ def get_score(passenger: dict, weights: dict) -> float:
     return score
 
 
-def create_dict_scores(dataset: dict, weights: dict) -> dict:
+def create_dict_scores(dataset: dict, weights: dict, features_list: list, age_values = None) -> dict:
     """Собирает словарь с предиктом для каждого пасажира"""
     result = {}
     for passenger in dataset:
-        result[passenger["PassengerId"]] = get_score(passenger,weights)
+        result[passenger["PassengerId"]] = get_score(passenger,weights, features_list, age_values)
         
     return result
 
