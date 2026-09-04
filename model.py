@@ -61,7 +61,7 @@ def select_weights(raw_list: list,
     
 def create_new_weights(weights: dict, step: float, seed_value = 0) -> dict:
     """Возвращает новый словарь с весами, одно значение которого увеличилось или уменьшилась на step"""
-    rng = rnd.Random(seed_value)
+    rnd.Random(seed_value)
     weights_copy = deepcopy(weights)
     all_features = [
     (feature, value)
@@ -89,12 +89,12 @@ def train_classifier(raw_list: list,
     "Подбираем лучшие веса для классифкатора"
     
     
-    row_format = "{:<20} {:<20} {:<20}"
+    #row_format = "{:<20} {:<20} {:<20}"
     new_weights = deepcopy(weights)
 
     start_time = time.perf_counter()
     
-    print(row_format.format(*["Step","Attempts","Accepted"]))
+    #print(row_format.format(*["Step","Attempts","Accepted"]))
     for step in steps:
         i = 0
         k = 0
@@ -108,7 +108,7 @@ def train_classifier(raw_list: list,
                 i += 1
             k +=1
             
-        print(row_format.format(*[round(step,3),k,c]))
+        #print(row_format.format(*[round(step,3),k,c]))
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)
     return new_weights, t

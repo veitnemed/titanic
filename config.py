@@ -5,10 +5,10 @@ TRAIN = os.path.join(dirname, "datasets/train.csv")
 RESULT = os.path.join(dirname, "output_data/result_train_binare.csv")
 WEIGHTS = os.path.join(dirname,"weights.json")
 
-STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125, 0.05, 0.01]
+STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125]
 NUMBER_OF_ITERATIONS = 100
 THREASHOLD = 0.5
-SEED_SPLIT = 43
+SEED_SPLIT = 1
 SEED_TRAIN = SEED_SPLIT
 
 CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
@@ -50,7 +50,13 @@ DEFAULT_WEIGHTS = {
         "S": 0,
         "C": 0
     },
-
+    "Age":
+        {
+            "6": 0,
+            "18": 0,
+            "45": 0,
+            "100": 0
+        },
         "Male & zero": {
       "Male & zero": 0
    },
@@ -62,6 +68,7 @@ DEFAULT_WEIGHTS = {
 FEATURES = list(DEFAULT_WEIGHTS.keys())
 
 ru_column = {
+    
     "Age": "Возраст пассажира",
     "Cabin": "Каюта",
     "Embarked": "Порт посадки",

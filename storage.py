@@ -13,7 +13,7 @@ def get_full_csv_list(file_name) -> list[dict]:
 def get_train_csv_lists(filename: str, seed_value = 1) -> tuple[list, list]:
     """Рандомно разделяет датасет 80/20"""
     import random as rnd
-    rnd.Random(seed_value)
+    rng = rnd.Random(seed_value)
     
     full_data = get_full_csv_list(filename)
     train_data = full_data.copy()
@@ -24,7 +24,7 @@ def get_train_csv_lists(filename: str, seed_value = 1) -> tuple[list, list]:
     test_data = []
     
     for _ in range(len_test):
-        obj = rnd.choice(train_data)
+        obj = rng.choice(train_data)
         train_data.remove(obj)
         test_data.append(obj)
     
@@ -80,9 +80,18 @@ def file_exists(filename: str):
     """Проверка существует ли файл"""
     return os.path.isfile(filename)
 
+def empty_file(filename: str):
+    with open(filename, 'r', encoding="utf-8") as f:
+            weights = json.load(f)
+    return len(weights) == 0
+
 def create_json(filename, default_weights):
     with open(filename, 'w', encoding="utf-8") as f:
         json.dump(default_weights, f) 
+
+def clean_json(filename):
+    with open(filename, 'w', encoding="utf-8") as f:
+        json.dump(dict(), f) 
 
 def load_json(filename: str):
     with open(filename, 'r', encoding="utf-8") as f:
@@ -96,6 +105,8 @@ def save_json(filename: str, weights: dict):
 def json_init(filename: str, default_weights: dict):
     
     if file_exists(filename) is False:
+        create_json(filename, default_weights)
+    if empty_file(filename) is True:
         create_json(filename, default_weights)
 
 

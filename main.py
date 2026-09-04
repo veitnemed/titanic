@@ -4,7 +4,7 @@ from storage import (
                      get_train_csv_lists,
                      save_json,
                      load_json, 
-                     create_json)
+                     create_json, json_init, clean_json)
 
 from features import replace_median_ages
 from config import  (TRAIN, 
@@ -20,26 +20,25 @@ from info import (show_main_info,
                   row_table_v2,
                   print_is_uppdate_weights,
                   show_top_n_error,
-                  show_weights,
+                  show_weights
                   )
 
 from model import train_classifier, calculate_mean_loss
 import os
 
-    
-def main_func():
+def main_train(seed):
     """Главная функция преокта"""
+    
     default_weights = DEFAULT_WEIGHTS.copy()
     age_values = None
     if "Age" in default_weights:
         age_values = list(map(int,list(default_weights["Age"].keys())))
     # 1) Начальные рассчёты
-    #json_init(WEIGHTS, DEFAULT_WEIGHTS)
-    default_weights = DEFAULT_WEIGHTS
+    json_init(WEIGHTS, DEFAULT_WEIGHTS)
+
     features_list = list(default_weights.keys())
-    create_json(WEIGHTS, default_weights)
     weights = load_json(WEIGHTS)
-    train, test  = get_train_csv_lists(TRAIN, seed_value = SEED_SPLIT)
+    train, test  = get_train_csv_lists(TRAIN, seed_value = seed)
     train, test = replace_median_ages(train), replace_median_ages(test)
     survived = survived_dict(train)
     baseline = baseline_dict(train)
@@ -47,7 +46,7 @@ def main_func():
     start_loss = calculate_mean_loss(train, survived, weights, features_list, age_values)
     
     # 2) Вывод шапки
-    show_main_info(train, test, SEED_SPLIT, SEED_TRAIN)
+    show_main_info(train, test, seed, seed)
     
     # 3) Обучение
     print("TRAINING")
@@ -56,7 +55,7 @@ def main_func():
                                       weights = weights,
                                       steps = STEPS_FOR_TRAIN,
                                       iters = NUMBER_OF_ITERATIONS,
-                                      seed_value = SEED_TRAIN,
+                                      seed_value = seed,
                                       features_list = features_list,
                                       age_values = age_values)
     
@@ -96,7 +95,7 @@ def main_func():
     
     # 5) Время рассчёта и апдейт
     print(f"\nTraining time: {time_train} sec")
-    new_loss = calculate_mean_loss(train,survived,new_weights,features_list, age_values)
+    new_loss = calculate_mean_loss(test,survived_test,new_weights,features_list, age_values)
     
     #show_weights(weights, new_weights)
     print_is_uppdate_weights(start_loss, new_loss)
@@ -106,7 +105,63 @@ def main_func():
     #new_data = replace_median_ages(new_data)
     #dict_loss = create_dict_loss(train, survived, new_weights, features_list)
     #new_data = add_column_from_dataset(new_data, dict_loss, "Loss")
-    #print_matrix(cor_marix(new_data))
+    #print_matrix(cor_marix(new_data))  
+    return new_loss
+
+def impact_weghts(start_loss, seed):
+    
+    print("ВКЛАДЫ ВЕСОВ\n")
+    
+    print(f"Изначальный LOSS: {round(start_loss, 3)}")
+    print(f"Seed: {seed}")
+    
+    default_weights = DEFAULT_WEIGHTS.copy()
+    res = {}
+    for k, v in DEFAULT_WEIGHTS.items():
+        clean_json(WEIGHTS)
+        default_weights.pop(k)
+    
+        if "Age" in default_weights:
+            age_values = list(map(int,list(default_weights["Age"].keys())))
+            
+        # 1) Начальные рассчёты
+        json_init(WEIGHTS, DEFAULT_WEIGHTS)
+    
+        features_list = list(default_weights.keys())
+        weights = load_json(WEIGHTS)
+        train, test  = get_train_csv_lists(TRAIN, seed_value = seed)
+        train, test = replace_median_ages(train), replace_median_ages(test)
+        survived = survived_dict(train)
+        survived_test = survived_dict(test)
+
+        new_weights, time_train = train_classifier(raw_list = train,
+                                          actual = survived,
+                                          weights = weights,
+                                          steps = STEPS_FOR_TRAIN,
+                                          iters = NUMBER_OF_ITERATIONS,
+                                          seed_value = seed,
+                                          features_list = features_list,
+                                          age_values = age_values)  
+        
+        new_loss = calculate_mean_loss(test, survived_test, new_weights, features_list, age_values)
+        res[k] = round(new_loss,3)
+        default_weights[k] = v
+    
+    for k, v in res.items():
+        print(f"Loss без {k}: {v} // Польза {100*round(v-start_loss,4)} % ")
+        
+        
+    
+    
+   
+    
+    
+      
+def main_func():
+    for idx, seed in enumerate(list(range(10))):
+        print(f"Эксперимент {idx+1}")
+        start_loss = main_train(seed)
+        impact_weghts(start_loss,seed)
     
 if __name__ == "__main__":
     os.system("cls")

@@ -1,0 +1,749 @@
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.427
+Seed: 3
+Loss без Sex: 0.579 // Польза 15.2 % 
+Loss без SibSp: 0.451 // Польза 2.4 % 
+Loss без Parch: 0.391 // Польза -3.5999999999999996 % 
+Loss без Pclass: 0.474 // Польза 4.7 % 
+Loss без Embarked: 0.426 // Польза -0.1 % 
+Loss без Age: 0.457 // Польза 3.0 % 
+Loss без Male & zero: 0.428 // Польза 0.1 % 
+Loss без Bias: 0.427 // Польза -0.0 % 
+Эксперимент 5
+TITANIC CLASSIFIER
+
+Split seed: 4
+Split seed: 4
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                78.09 %              ---                 
+Before training      Train                37.92 %              0.693               
+After training       Train                81.6 %               0.429               
+After training       Validation           82.12 %              0.411               
+
+Training time: 6.0 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+298 - 4.883
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+297          298         0       1  ...     2  151.55         S
+
+[1 rows x 9 columns] 
+
+206 - 3.288
+     PassengerId  Survived  Pclass  ... Parch     Fare  Embarked
+205          206         0       3  ...     1  10.4625         S
+
+[1 rows x 9 columns] 
+
+339 - 3.049
+     PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+338          339         1       3  ...     0  8.05         S
+
+[1 rows x 9 columns] 
+
+262 - 2.93
+     PassengerId  Survived  Pclass  ... Parch     Fare  Embarked
+261          262         1       3  ...     2  31.3875         S
+
+[1 rows x 9 columns] 
+
+302 - 2.464
+     PassengerId  Survived  Pclass  ... Parch   Fare  Embarked
+301          302         1       3  ...     0  23.25         Q
+
+[1 rows x 9 columns] 
+
+75 - 2.35
+    PassengerId  Survived  Pclass  ... Parch     Fare  Embarked
+74           75         1       3  ...     0  56.4958         S
+
+[1 rows x 9 columns] 
+
+82 - 2.35
+    PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+81           82         1       3  ...     0   9.5         S
+
+[1 rows x 9 columns] 
+
+108 - 2.35
+     PassengerId  Survived  Pclass  ... Parch   Fare  Embarked
+107          108         1       3  ...     0  7.775         S
+
+[1 rows x 9 columns] 
+
+128 - 2.35
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+127          128         1       3  ...     0  7.1417         S
+
+[1 rows x 9 columns] 
+
+147 - 2.35
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+146          147         1       3  ...     0  7.7958         S
+
+[1 rows x 9 columns] 
+
+272 - 2.35
+     PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+271          272         1       3  ...     0   0.0         S
+
+[1 rows x 9 columns] 
+
+284 - 2.35
+     PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+283          284         1       3  ...     0  8.05         S
+
+[1 rows x 9 columns] 
+
+287 - 2.35
+     PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+286          287         1       3  ...     0   9.5         S
+
+[1 rows x 9 columns] 
+
+392 - 2.35
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+391          392         1       3  ...     0  7.7958         S
+
+[1 rows x 9 columns] 
+
+401 - 2.35
+     PassengerId  Survived  Pclass  ... Parch   Fare  Embarked
+400          401         1       3  ...     0  7.925         S
+
+[1 rows x 9 columns] 
+
+415 - 2.35
+     PassengerId  Survived  Pclass  ... Parch   Fare  Embarked
+414          415         1       3  ...     0  7.925         S
+
+[1 rows x 9 columns] 
+
+430 - 2.35
+     PassengerId  Survived  Pclass  ... Parch  Fare  Embarked
+429          430         1       3  ...     0  8.05         S
+
+[1 rows x 9 columns] 
+
+445 - 2.35
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+444          445         1       3  ...     0  8.1125         S
+
+[1 rows x 9 columns] 
+
+510 - 2.35
+     PassengerId  Survived  Pclass  ... Parch     Fare  Embarked
+509          510         1       3  ...     0  56.4958         S
+
+[1 rows x 9 columns] 
+
+570 - 2.35
+     PassengerId  Survived  Pclass  ... Parch    Fare  Embarked
+569          570         1       3  ...     0  7.8542         S
+
+[1 rows x 9 columns] 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.411
+Seed: 4
+Loss без Sex: 0.563 // Польза 15.21 % 
+Loss без SibSp: 0.41 // Польза -0.09 % 
+Loss без Parch: 0.404 // Польза -0.69 % 
+Loss без Pclass: 0.465 // Польза 5.41 % 
+Loss без Embarked: 0.406 // Польза -0.49 % 
+Loss без Age: 0.436 // Польза 2.5100000000000002 % 
+Loss без Male & zero: 0.406 // Польза -0.49 % 
+Loss без Bias: 0.408 // Польза -0.29 % 
+Эксперимент 6
+TITANIC CLASSIFIER
+
+Split seed: 5
+Split seed: 5
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                78.37 %              ---                 
+Before training      Train                38.34 %              0.693               
+After training       Train                81.18 %              0.41                
+After training       Validation           81.56 %              0.523               
+
+Training time: 4.37 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+206 - 3.896
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch     Fare Embarked
+205          206         0       3  female  2.0      0      1  10.4625        S 
+
+339 - 2.93
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+338          339         1       3  male  45.0      0      0  8.05        S 
+
+710 - 2.812
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+709          710         1       3  male  NaN      1      1  15.2458        C 
+
+178 - 2.579
+     PassengerId  Survived  Pclass     Sex   Age  SibSp  Parch     Fare Embarked
+177          178         0       1  female  50.0      0      0  28.7125        C 
+
+75 - 2.579
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+74           75         1       3  male  32.0      0      0  56.4958        S 
+
+82 - 2.579
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+81           82         1       3  male  29.0      0      0   9.5        S 
+
+108 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch   Fare Embarked
+107          108         1       3  male  NaN      0      0  7.775        S 
+
+147 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+146          147         1       3  male  27.0      0      0  7.7958        S 
+
+205 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+204          205         1       3  male  18.0      0      0  8.05        S 
+
+284 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+283          284         1       3  male  19.0      0      0  8.05        S 
+
+287 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+286          287         1       3  male  30.0      0      0   9.5        S 
+
+392 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+391          392         1       3  male  21.0      0      0  7.7958        S 
+
+401 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+400          401         1       3  male  39.0      0      0  7.925        S 
+
+430 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+429          430         1       3  male  32.0      0      0  8.05        S 
+
+445 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+444          445         1       3  male  NaN      0      0  8.1125        S 
+
+510 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+509          510         1       3  male  26.0      0      0  56.4958        S 
+
+580 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+579          580         1       3  male  32.0      0      0  7.925        S 
+
+644 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+643          644         1       3  male  NaN      0      0  56.4958        S 
+
+693 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+692          693         1       3  male  NaN      0      0  56.4958        S 
+
+745 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+744          745         1       3  male  31.0      0      0  7.925        S 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.523
+Seed: 5
+Loss без Sex: 0.607 // Польза 8.42 % 
+Loss без SibSp: 0.525 // Польза 0.22 % 
+Loss без Parch: 0.491 // Польза -3.18 % 
+Loss без Pclass: 0.532 // Польза 0.9199999999999999 % 
+Loss без Embarked: 0.526 // Польза 0.32 % 
+Loss без Age: 0.543 // Польза 2.02 % 
+Loss без Male & zero: 0.519 // Польза -0.38 % 
+Loss без Bias: 0.52 // Польза -0.27999999999999997 % 
+Эксперимент 7
+TITANIC CLASSIFIER
+
+Split seed: 6
+Split seed: 6
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                78.93 %              ---                 
+Before training      Train                37.92 %              0.693               
+After training       Train                82.3 %               0.434               
+After training       Validation           82.12 %              0.39                
+
+Training time: 4.34 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+298 - 5.131
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch    Fare Embarked
+297          298         0       1  female  2.0      1      2  151.55        S 
+
+339 - 3.168
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+338          339         1       3  male  45.0      0      0  8.05        S 
+
+499 - 3.168
+     PassengerId  Survived  Pclass     Sex   Age  SibSp  Parch    Fare Embarked
+498          499         0       1  female  25.0      1      2  151.55        S 
+
+86 - 2.579
+    PassengerId  Survived  Pclass     Sex   Age  SibSp  Parch   Fare Embarked
+85           86         1       3  female  33.0      3      0  15.85        S 
+
+75 - 2.464
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+74           75         1       3  male  32.0      0      0  56.4958        S 
+
+82 - 2.464
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+81           82         1       3  male  29.0      0      0   9.5        S 
+
+128 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+127          128         1       3  male  24.0      0      0  7.1417        S 
+
+147 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+146          147         1       3  male  27.0      0      0  7.7958        S 
+
+205 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+204          205         1       3  male  18.0      0      0  8.05        S 
+
+206 - 2.464
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch     Fare Embarked
+205          206         0       3  female  2.0      0      1  10.4625        S 
+
+272 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+271          272         1       3  male  25.0      0      0   0.0        S 
+
+284 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+283          284         1       3  male  19.0      0      0  8.05        S 
+
+287 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+286          287         1       3  male  30.0      0      0   9.5        S 
+
+392 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+391          392         1       3  male  21.0      0      0  7.7958        S 
+
+401 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+400          401         1       3  male  39.0      0      0  7.925        S 
+
+415 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+414          415         1       3  male  44.0      0      0  7.925        S 
+
+430 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+429          430         1       3  male  32.0      0      0  8.05        S 
+
+445 - 2.464
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+444          445         1       3  male  NaN      0      0  8.1125        S 
+
+510 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+509          510         1       3  male  26.0      0      0  56.4958        S 
+
+570 - 2.464
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+569          570         1       3  male  32.0      0      0  7.8542        S 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.39
+Seed: 6
+Loss без Sex: 0.522 // Польза 13.25 % 
+Loss без SibSp: 0.395 // Польза 0.5499999999999999 % 
+Loss без Parch: 0.394 // Польза 0.44999999999999996 % 
+Loss без Pclass: 0.473 // Польза 8.35 % 
+Loss без Embarked: 0.391 // Польза 0.15 % 
+Loss без Age: 0.431 // Польза 4.15 % 
+Loss без Male & zero: 0.389 // Польза -0.05 % 
+Loss без Bias: 0.39 // Польза 0.05 % 
+Эксперимент 8
+TITANIC CLASSIFIER
+
+Split seed: 7
+Split seed: 7
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                78.79 %              ---                 
+Before training      Train                39.89 %              0.693               
+After training       Train                81.88 %              0.412               
+After training       Validation           78.77 %              0.47                
+
+Training time: 4.45 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+298 - 4.883
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch    Fare Embarked
+297          298         0       1  female  2.0      1      2  151.55        S 
+
+206 - 3.773
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch     Fare Embarked
+205          206         0       3  female  2.0      0      1  10.4625        S 
+
+262 - 2.695
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+261          262         1       3  male  3.0      4      2  31.3875        S 
+
+82 - 2.579
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+81           82         1       3  male  29.0      0      0   9.5        S 
+
+108 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch   Fare Embarked
+107          108         1       3  male  NaN      0      0  7.775        S 
+
+128 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+127          128         1       3  male  24.0      0      0  7.1417        S 
+
+147 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+146          147         1       3  male  27.0      0      0  7.7958        S 
+
+205 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+204          205         1       3  male  18.0      0      0  8.05        S 
+
+272 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+271          272         1       3  male  25.0      0      0   0.0        S 
+
+284 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+283          284         1       3  male  19.0      0      0  8.05        S 
+
+287 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+286          287         1       3  male  30.0      0      0   9.5        S 
+
+392 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+391          392         1       3  male  21.0      0      0  7.7958        S 
+
+401 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+400          401         1       3  male  39.0      0      0  7.925        S 
+
+415 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+414          415         1       3  male  44.0      0      0  7.925        S 
+
+430 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+429          430         1       3  male  32.0      0      0  8.05        S 
+
+445 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+444          445         1       3  male  NaN      0      0  8.1125        S 
+
+570 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+569          570         1       3  male  32.0      0      0  7.8542        S 
+
+580 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+579          580         1       3  male  32.0      0      0  7.925        S 
+
+644 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+643          644         1       3  male  NaN      0      0  56.4958        S 
+
+693 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+692          693         1       3  male  NaN      0      0  56.4958        S 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.47
+Seed: 7
+Loss без Sex: 0.562 // Польза 9.22 % 
+Loss без SibSp: 0.48 // Польза 1.02 % 
+Loss без Parch: 0.468 // Польза -0.18 % 
+Loss без Pclass: 0.514 // Польза 4.42 % 
+Loss без Embarked: 0.47 // Польза 0.02 % 
+Loss без Age: 0.491 // Польза 2.12 % 
+Loss без Male & zero: 0.471 // Польза 0.12 % 
+Loss без Bias: 0.471 // Польза 0.12 % 
+Эксперимент 9
+TITANIC CLASSIFIER
+
+Split seed: 8
+Split seed: 8
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                78.65 %              ---                 
+Before training      Train                38.34 %              0.693               
+After training       Train                81.6 %               0.427               
+After training       Validation           82.68 %              0.432               
+
+Training time: 4.54 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+298 - 5.255
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch    Fare Embarked
+297          298         0       1  female  2.0      1      2  151.55        S 
+
+86 - 3.288
+    PassengerId  Survived  Pclass     Sex   Age  SibSp  Parch   Fare Embarked
+85           86         1       3  female  33.0      3      0  15.85        S 
+
+339 - 3.168
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+338          339         1       3  male  45.0      0      0  8.05        S 
+
+66 - 2.579
+    PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+65           66         1       3  male  NaN      1      1  15.2458        C 
+
+623 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+622          623         1       3  male  20.0      1      1  15.7417        C 
+
+37 - 2.35
+    PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+36           37         1       3  male  NaN      0      0  7.2292        C 
+
+75 - 2.35
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+74           75         1       3  male  32.0      0      0  56.4958        S 
+
+82 - 2.35
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+81           82         1       3  male  29.0      0      0   9.5        S 
+
+108 - 2.35
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch   Fare Embarked
+107          108         1       3  male  NaN      0      0  7.775        S 
+
+128 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+127          128         1       3  male  24.0      0      0  7.1417        S 
+
+147 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+146          147         1       3  male  27.0      0      0  7.7958        S 
+
+205 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+204          205         1       3  male  18.0      0      0  8.05        S 
+
+272 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+271          272         1       3  male  25.0      0      0   0.0        S 
+
+392 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+391          392         1       3  male  21.0      0      0  7.7958        S 
+
+401 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+400          401         1       3  male  39.0      0      0  7.925        S 
+
+415 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+414          415         1       3  male  44.0      0      0  7.925        S 
+
+430 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+429          430         1       3  male  32.0      0      0  8.05        S 
+
+445 - 2.35
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+444          445         1       3  male  NaN      0      0  8.1125        S 
+
+456 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+455          456         1       3  male  29.0      0      0  7.8958        C 
+
+510 - 2.35
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+509          510         1       3  male  26.0      0      0  56.4958        S 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.432
+Seed: 8
+Loss без Sex: 0.533 // Польза 10.13 % 
+Loss без SibSp: 0.411 // Польза -2.07 % 
+Loss без Parch: 0.432 // Польза 0.03 % 
+Loss без Pclass: 0.493 // Польза 6.13 % 
+Loss без Embarked: 0.436 // Польза 0.43 % 
+Loss без Age: 0.428 // Польза -0.37 % 
+Loss без Male & zero: 0.432 // Польза 0.03 % 
+Loss без Bias: 0.435 // Польза 0.33 % 
+Эксперимент 10
+TITANIC CLASSIFIER
+
+Split seed: 9
+Split seed: 9
+Train: 712 passengers
+Validation: 179 passengers
+
+
+TRAINING
+
+
+RESULTS
+Model                Dataset              Accuracy             Loss                
+Baseline             Train                79.07 %              ---                 
+Before training      Train                38.2 %               0.693               
+After training       Train                82.44 %              0.414               
+After training       Validation           77.65 %              0.465               
+
+Training time: 4.48 sec
+Checkpoint: updated
+
+
+TOP LOSS (top 20)
+298 - 4.635
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch    Fare Embarked
+297          298         0       1  female  2.0      1      2  151.55        S 
+
+339 - 3.168
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+338          339         1       3  male  45.0      0      0  8.05        S 
+
+206 - 3.049
+     PassengerId  Survived  Pclass     Sex  Age  SibSp  Parch     Fare Embarked
+205          206         0       3  female  2.0      0      1  10.4625        S 
+
+262 - 2.812
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch     Fare Embarked
+261          262         1       3  male  3.0      4      2  31.3875        S 
+
+499 - 2.579
+     PassengerId  Survived  Pclass     Sex   Age  SibSp  Parch    Fare Embarked
+498          499         0       1  female  25.0      1      2  151.55        S 
+
+75 - 2.579
+    PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+74           75         1       3  male  32.0      0      0  56.4958        S 
+
+108 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch   Fare Embarked
+107          108         1       3  male  NaN      0      0  7.775        S 
+
+128 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+127          128         1       3  male  24.0      0      0  7.1417        S 
+
+147 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+146          147         1       3  male  27.0      0      0  7.7958        S 
+
+205 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+204          205         1       3  male  18.0      0      0  8.05        S 
+
+268 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+267          268         1       3  male  25.0      1      0  7.775        S 
+
+272 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+271          272         1       3  male  25.0      0      0   0.0        S 
+
+284 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+283          284         1       3  male  19.0      0      0  8.05        S 
+
+287 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+286          287         1       3  male  30.0      0      0   9.5        S 
+
+392 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch    Fare Embarked
+391          392         1       3  male  21.0      0      0  7.7958        S 
+
+401 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+400          401         1       3  male  39.0      0      0  7.925        S 
+
+415 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch   Fare Embarked
+414          415         1       3  male  44.0      0      0  7.925        S 
+
+430 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch  Fare Embarked
+429          430         1       3  male  32.0      0      0  8.05        S 
+
+445 - 2.579
+     PassengerId  Survived  Pclass   Sex  Age  SibSp  Parch    Fare Embarked
+444          445         1       3  male  NaN      0      0  8.1125        S 
+
+510 - 2.579
+     PassengerId  Survived  Pclass   Sex   Age  SibSp  Parch     Fare Embarked
+509          510         1       3  male  26.0      0      0  56.4958        S 
+
+ВКЛАДЫ ВЕСОВ
+
+Изначальный LOSS: 0.465
+Seed: 9
+Loss без Sex: 0.572 // Польза 10.68 % 
+Loss без SibSp: 0.463 // Польза -0.22 % 
+Loss без Parch: 0.464 // Польза -0.12 % 
+Loss без Pclass: 0.53 // Польза 6.4799999999999995 % 
+Loss без Embarked: 0.454 // Польза -1.1199999999999999 % 
+Loss без Age: 0.505 // Польза 3.9800000000000004 % 
+Loss без Male & zero: 0.46 // Польза -0.52 % 
+Loss без Bias: 0.463 // Польза -0.22 % 
