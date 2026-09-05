@@ -2,8 +2,9 @@
 import os 
 dirname = os.path.dirname(__file__)
 TRAIN = os.path.join(dirname, "datasets/train.csv")
-RESULT = os.path.join(dirname, "output_data/result_train_binare.csv")
-WEIGHTS = os.path.join(dirname,"weights.json")
+RESULT = os.path.join(dirname, "data/result_train_binare.csv")
+WEIGHTS = os.path.join(dirname,"data/weights.json")
+
 
 STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125]
 NUMBER_OF_ITERATIONS = 100

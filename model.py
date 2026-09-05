@@ -49,26 +49,28 @@ def select_weights(raw_list: list,
                    step: float,
                    seed_value: int,
                    features_list: list,
+                   random_generator,
                    age_values = None):
     """Возвращает словарь новых весов если mean_loss стало меньше"""
     
     mean_loss = calculate_mean_loss(raw_list, actual_survived, weights, features_list, age_values)
-    new_weights = create_new_weights(weights, step, seed_value)
+    new_weights = create_new_weights(weights, step, random_generator, seed_value)
     new_mean_loss = calculate_mean_loss(raw_list, actual_survived, new_weights, features_list, age_values)
     if new_mean_loss < mean_loss:
         return new_weights, True
     return weights, False
     
-def create_new_weights(weights: dict, step: float, seed_value = 0) -> dict:
+def create_new_weights(weights: dict, step: float, random_generator, seed_value = 0) -> dict:
     """Возвращает новый словарь с весами, одно значение которого увеличилось или уменьшилась на step"""
-    rnd.Random(seed_value)
+    
+    
     weights_copy = deepcopy(weights)
     all_features = [
     (feature, value)
     for feature, values in weights.items()
     for value in values]
-    feature1, value1 = rnd.choice(all_features)
-    weights_copy[feature1][value1] += step*rnd.choice([-1,1])
+    feature1, value1 = random_generator.choice(all_features)
+    weights_copy[feature1][value1] += step*random_generator.choice([-1,1])
     return weights_copy
 
 def train_steps(raw_list: list, 
@@ -84,31 +86,42 @@ def train_classifier(raw_list: list,
                      iters: int,
                      seed_value: int,
                      features_list: list,
-                     age_values) -> tuple[dict, float]:
+                     age_values,
+                     show_progress: bool = False) -> tuple[dict, float]:
 
     "Подбираем лучшие веса для классифкатора"
     
-    
-    #row_format = "{:<20} {:<20} {:<20}"
+    local_gen = rnd.Random(seed_value)
+    if show_progress is True:
+        row_format = "{:<20} {:<20} {:<20}"
     new_weights = deepcopy(weights)
 
     start_time = time.perf_counter()
     
-    #print(row_format.format(*["Step","Attempts","Accepted"]))
+    if show_progress is True:
+        print(row_format.format(*["Step","Attempts","Accepted"]))
     for step in steps:
         i = 0
         k = 0
         c = 0
-        while i <= iters:
-            new_weights, new = select_weights(raw_list, actual,  new_weights, step, seed_value, features_list, age_values)
+        while i <= iters: # Пока не будет iters попыток без улчшения
+            new_weights, new = select_weights(raw_list = raw_list,
+                                              actual_survived = actual,
+                                              weights = new_weights,
+                                              step = step,
+                                              seed_value = seed_value,
+                                              features_list = features_list,
+                                              random_generator = local_gen,
+                                              age_values = age_values
+                                              )
             if new is True:
                 i = 0
                 c += 1
             else:
                 i += 1
             k +=1
-            
-        #print(row_format.format(*[round(step,3),k,c]))
+        if show_progress is True:    
+            print(row_format.format(*[round(step,3),k,c]))
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)
     return new_weights, t

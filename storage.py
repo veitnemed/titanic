@@ -78,7 +78,7 @@ def baseline_dict(csv_list):
 
 def file_exists(filename: str):
     """Проверка существует ли файл"""
-    return os.path.isfile(filename)
+    return os.path.exists(filename)
 
 def empty_file(filename: str):
     with open(filename, 'r', encoding="utf-8") as f:
@@ -103,7 +103,13 @@ def save_json(filename: str, weights: dict):
         json.dump(weights, f, indent=3)
 
 def json_init(filename: str, default_weights: dict):
-    
+    """
+    1. Если папки нет, создаем 
+    2. Если фй
+    """
+    directory = os.path.dirname(filename)
+    if file_exists(directory) is False:
+        os.makedirs(directory)
     if file_exists(filename) is False:
         create_json(filename, default_weights)
     if empty_file(filename) is True:

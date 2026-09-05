@@ -57,7 +57,8 @@ def main_train(seed):
                                       iters = NUMBER_OF_ITERATIONS,
                                       seed_value = seed,
                                       features_list = features_list,
-                                      age_values = age_values)
+                                      age_values = age_values,
+                                      show_progress = True)
     
     # 4) Результаты 
     print("\n\nRESULTS")
@@ -99,7 +100,7 @@ def main_train(seed):
     
     #show_weights(weights, new_weights)
     print_is_uppdate_weights(start_loss, new_loss)
-    show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
+    #show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
    
     #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})
     #new_data = replace_median_ages(new_data)
@@ -158,11 +159,11 @@ def impact_weghts(start_loss, seed):
     
       
 def main_func():
-    for idx, seed in enumerate(list(range(10))):
-        print(f"Эксперимент {idx+1}")
-        start_loss = main_train(seed)
-        impact_weghts(start_loss,seed)
-    
+    #for idx, seed in enumerate(list(range(10))):
+        #print(f"Эксперимент {idx+1}")
+        #start_loss = main_train(seed)
+        #impact_weghts(start_loss,seed)
+    main_train(10)
 if __name__ == "__main__":
     os.system("cls")
     main_func()
