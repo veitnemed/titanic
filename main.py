@@ -16,7 +16,7 @@ from info import print_result
 from model import train_classifier, calculate_mean_loss
 import os
 
-def init_train_dicts(train_data: list, test_data: list) -> dict:
+def init_train_dicts(train_data: list, valid_data: list) -> dict:
     
     default_weights = DEFAULT_WEIGHTS.copy()
     age_values = None
@@ -29,11 +29,11 @@ def init_train_dicts(train_data: list, test_data: list) -> dict:
     start_weights = load_json(WEIGHTS_JSON_PATCH)
     train_answers = survived_dict(train_data)
     baseline_predictions = baseline_dict(train_data)
-    valid_answers = survived_dict(test_data)
+    valid_answers = survived_dict(valid_data)
     start_loss = calculate_mean_loss(train_data, train_answers, start_weights, features_list, age_values)
                    
     return  {"train_data": train_data,
-             "test_data": test_data,
+             "valid_data": valid_data,
              "start_weights": start_weights, 
              "train_answers": train_answers,
              "start_loss": start_loss,
@@ -43,39 +43,35 @@ def init_train_dicts(train_data: list, test_data: list) -> dict:
              "baseline_predictions": baseline_predictions}
 
 
-def impact_weights(test, train, start_loss, seed):
+def impact_weights(valid_data, train_data, start_loss, seed):
     
     print("ВКЛАДЫ ВЕСОВ\n")
     print(f"Изначальный LOSS: {round(start_loss, 3)}")
     print(f"Seed: {seed}")
     
     default_weights = DEFAULT_WEIGHTS.copy()
-    weights = DEFAULT_WEIGHTS
-    res = {}
+    losses_result = {}
     
     for class_feature, feature in DEFAULT_WEIGHTS.items():
     
         default_weights.pop(class_feature)
-        
-        if "Age" in default_weights:
-            age_values = list(map(int,list(default_weights["Age"].keys())))
             
-        weights, survived, start_loss, survived_test, features_list, age_values, baseline = init_train_dicts(train,test)
-        train_weights,_ = train_classifier(raw_list = train,
-                                          train_answers = survived,
-                                          start_weights = weights,
-                                          steps = WEIGHT_STEPS,
-                                          iters = NO_CHANGE_ITERATIONS,
-                                          seed_value = seed,
-                                          features_list = features_list,
-                                          age_values = age_values)  
+        train_context = init_train_dicts(train_data,valid_data)
+        weights_train, _ = train_classifier(raw_list = train_data,
+                                                      train_answers = train_context["train_answers"],
+                                                      start_weights = train_context["start_weights"],
+                                                      steps = WEIGHT_STEPS,
+                                                      iters = NO_CHANGE_ITERATIONS,
+                                                      seed_value = seed,
+                                                      features_list = train_context["features_list"],
+                                                      age_values = train_context["age_values"],) 
         
-        new_loss = calculate_mean_loss(test, survived_test, train_weights, features_list, age_values)
-        res[class_feature] = round(new_loss,3)
+        new_loss = calculate_mean_loss(valid_data,train_context["valid_answers"],weights_train,train_context["features_list"], train_context["age_values"])
+        losses_result[class_feature] = round(new_loss,3)
         default_weights[class_feature] = feature
     
-    for class_feature, feature in res.items():
-        print(f"Loss без {class_feature}: {feature} // Польза {100*round(feature-start_loss,4)} % ")
+    for class_feature, feature in losses_result.items():
+        print(f"Loss без {class_feature}: {feature} ")
         
 def mean_impact_weights(test: list, train: list):
     for idx, seed in enumerate(list(range(10))):
@@ -90,8 +86,8 @@ def train_model(valid_data: list,
              is_show_result: bool = False) -> dict:
     """Обучение, обновыление весов и вывод losss"""
     
-    train_context = init_train_dicts(train_data = train_data, test_data = valid_data)
-    weights_train, time_train = train_classifier(raw_list = train_data,
+    train_context = init_train_dicts(train_data = train_data, valid_data = valid_data)
+    trained_weights, time_train = train_classifier(raw_list = train_data,
                                               train_answers = train_context["train_answers"],
                                               start_weights = train_context["start_weights"],
                                               steps = WEIGHT_STEPS,
@@ -100,38 +96,37 @@ def train_model(valid_data: list,
                                               features_list = train_context["features_list"],
                                               age_values = train_context["age_values"],
                                               is_show_progress = is_show_progress)
-    
-    loss_train = calculate_mean_loss(valid_data,train_context["valid_answers"],weights_train,train_context["features_list"], train_context["age_values"])
-    if is_show_result is True:
-        print_result(train_data = train_data,
-                    valid_data = valid_data,
-                    seed = seed,
-                    start_weights = train_context["start_weights"],
-                    trained_weights = weights_train,
-                    baseline_predictions = train_context["baseline_predictions"],
-                    train_answers = train_context["train_answers"],
-                    valid_answers = train_context["valid_answers"],
-                    features_list = train_context["features_list"],
-                    age_values = train_context["age_values"],
-                    start_loss = train_context["start_loss"],
-                    train_loss = loss_train,
-                    time_train = time_train
-                    )
-    return {
-        "weights_train": weights_train,
-        "loss_train": loss_train,
+
+
+    """def print_result(
+                train_context,
+                trained_weights: dict,
+                time_train: float,
+                train_loss: float,
+                seed: int
+                ):"""
+    train_loss = calculate_mean_loss(valid_data,train_context["valid_answers"],trained_weights,train_context["features_list"], train_context["age_values"])
+    result_context = {
+        "trained_weights": trained_weights,
+        "train_loss": train_loss,
         "time_train": time_train
     }
+    if is_show_result is True:
+        print_result(train_context = train_context,
+                    result_context = result_context,
+                    seed = seed,
+                    )
+    return result_context
     
 def main_func():
     train, test  = get_train_csv_lists(DATASET_CSV_PATCH, seed_value = SPLIT_SEED)
     train, test = replace_median_ages(train), replace_median_ages(test)
-    res_train = train_model(valid_data = test, 
+    result_context = train_model(valid_data = test, 
                          train_data = train, 
                          seed = TRAIN_SEED,
                          is_show_result = True, 
                          is_show_progress=True)
-    save_json(WEIGHTS_JSON_PATCH, res_train["weights_train"])
+    save_json(WEIGHTS_JSON_PATCH, result_context["trained_weights"])
     
 if __name__ == "__main__":
     os.system("cls")

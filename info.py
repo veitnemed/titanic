@@ -90,54 +90,45 @@ def print_is_uppdate_weights(old_loss: float, new_loss: float) -> bool:
             word = "not updated"
      print(f"Checkpoint: {word}\n\n")
 
-def print_result(train_data: list,
-                valid_data: list,
-                seed: int,
-                baseline_predictions: dict,
-                train_answers: dict,
-                valid_answers: dict,
-                start_weights: dict,
-                trained_weights: dict,
-                features_list: list,
-                age_values: list,
-                time_train: float,
-                start_loss: float,
-                train_loss: float
+def print_result(
+                train_context,
+                result_context,
+                seed: int
                 ):
-    
-    show_main_info(train_data, valid_data, seed, seed)
+
+    show_main_info(train_context["train_data"], train_context["valid_data"], seed, seed)
     print("RESULTS")
     print("{:<20} {:<20} {:<20} {:<20}".format(*["Model","Dataset","Accuracy ","Loss"]))
-    row_table_v2(binary = baseline_predictions,
-                        survived = train_answers,
+    row_table_v2(binary = train_context["baseline_predictions"],
+                        survived = train_context["train_answers"],
                         message = "Baseline",
                         dataset = "Train")
-    row_table(raw_list = train_data,
-               weights = start_weights,
-               survived = train_answers,
+    row_table(raw_list = train_context["train_data"],
+               weights = train_context["start_weights"],
+               survived = train_context["train_answers"],
                message = "Before training",
                dataset = "Train",
-               features_list=features_list,
-               age_values = age_values)
-    row_table(raw_list = train_data,
-               weights = trained_weights,
-               survived = train_answers,
+               features_list = train_context["features_list"],
+               age_values = train_context["age_values"])
+    row_table(raw_list = train_context["train_data"],
+               weights = result_context["trained_weights"],
+               survived = train_context["train_answers"],
                message = "After training",
                dataset = "Train",
-               features_list = features_list,
-               age_values=age_values
+               features_list = train_context["features_list"],
+               age_values = train_context["age_values"]
                )
-    row_table(raw_list = valid_data,
-               weights = trained_weights,
-               survived = valid_answers,
+    row_table(raw_list = train_context["valid_data"],
+               weights = result_context["trained_weights"],
+               survived = train_context["valid_answers"],
                message = "After training",
-               dataset="Validation",
-               features_list = features_list,
-               age_values = age_values
+               dataset = "Validation",
+               features_list = train_context["features_list"],
+               age_values = train_context["age_values"]
                )
-    print(f"\nTraining time: {time_train} sec")
+    print(f"\nTraining time: {result_context["time_train"]} sec")
         #show_weights(weights, new_weights)
-    print_is_uppdate_weights(start_loss, train_loss)
+    print_is_uppdate_weights(train_context["start_loss"], result_context["train_loss"])
         #show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
            
         #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})
