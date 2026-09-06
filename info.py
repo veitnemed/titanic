@@ -128,7 +128,7 @@ def print_result(
                )
     print(f"\nTraining time: {result_context["time_train"]} sec")
         #show_weights(weights, new_weights)
-    print_is_uppdate_weights(train_context["start_loss"], result_context["train_loss"])
+    print_is_uppdate_weights(train_context["start_loss"], result_context["valid_loss"])
         #show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
            
         #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})

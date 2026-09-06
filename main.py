@@ -98,10 +98,10 @@ def train_model(valid_data: list,
                                               age_values = train_context["age_values"],
                                               is_show_progress = is_show_progress)
 
-    train_loss = calculate_mean_loss(valid_data,train_context["valid_answers"],trained_weights,train_context["features_list"], train_context["age_values"])
+    valid_loss = calculate_mean_loss(valid_data,train_context["valid_answers"],trained_weights,train_context["features_list"], train_context["age_values"])
     result_context = {
         "trained_weights": trained_weights,
-        "train_loss": train_loss,
+        "valid_loss": valid_loss,
         "time_train": time_train
     }
     if is_show_result is True:
