@@ -1,5 +1,5 @@
 
-from config import  (DATASET_CSV_PATCH, THREASHOLD)
+from config import  (DATASET_CSV_PATH, THREASHOLD)
 from scores import (
                     survived_counter, 
                     number_of_prediction,
@@ -69,7 +69,7 @@ def show_main_info(train,test,seed, seed_train):
 
 def show_top_n_error(train: list, survived: dict, new_weights: dict, n: int, features_list: list, age_values):
     import pandas as pd
-    df = pd.read_csv(DATASET_CSV_PATCH)
+    df = pd.read_csv(DATASET_CSV_PATH)
     df = df.reset_index()
     df = df.drop(labels = ["Name", "Ticket", "Cabin","index"], axis = 1)
     print(f'TOP LOSS (top {n})')

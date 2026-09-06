@@ -2,9 +2,9 @@
 import os 
 
 dirname = os.path.dirname(__file__)
-DATASET_CSV_PATCH = os.path.join(dirname, "datasets/train.csv")
-RESULT_PATCH = os.path.join(dirname, "data/result_train_binare.csv")
-WEIGHTS_JSON_PATCH = os.path.join(dirname,"data/weights.json")
+DATASET_CSV_PATH = os.path.join(dirname, "datasets/train.csv")
+RESULT_PATH = os.path.join(dirname, "data/result_train_binare.csv")
+WEIGHTS_JSON_PATH = os.path.join(dirname,"data/weights.json")
 
 WEIGHT_STEPS = [1, 0.5, 0.25, 0.125]
 NO_CHANGE_ITERATIONS = 100

@@ -13,6 +13,7 @@ def calculate_mean_loss(raw_list: list,
                         weights: dict,
                         features_list: list,
                         age_values = None):
+    
     sum_loss = 0
     
     length = len(raw_list)
