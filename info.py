@@ -1,7 +1,5 @@
 
-from config import  (TRAIN, 
-                     THREASHOLD)
-
+from config import  (DATASET_CSV_PATCH, THREASHOLD)
 from scores import (
                     survived_counter, 
                     number_of_prediction,
@@ -9,9 +7,7 @@ from scores import (
                     create_dict_binary, 
                     scores_to_sigmoids,
                     )
-
 from model import  calculate_mean_loss, create_dict_loss
-
 
 def show_main_info_for_training(scores: dict, binary: dict, mean_score: float):
     """Выводится основная информация о прогнозе"""
@@ -73,7 +69,7 @@ def show_main_info(train,test,seed, seed_train):
 
 def show_top_n_error(train: list, survived: dict, new_weights: dict, n: int, features_list: list, age_values):
     import pandas as pd
-    df = pd.read_csv(TRAIN)
+    df = pd.read_csv(DATASET_CSV_PATCH)
     df = df.reset_index()
     df = df.drop(labels = ["Name", "Ticket", "Cabin","index"], axis = 1)
     print(f'TOP LOSS (top {n})')
@@ -94,56 +90,54 @@ def print_is_uppdate_weights(old_loss: float, new_loss: float) -> bool:
             word = "not updated"
      print(f"Checkpoint: {word}\n\n")
 
-def show_result(train: list,
-                test: list,
+def print_result(train_data: list,
+                valid_data: list,
                 seed: int,
-                baseline: dict,
-                survived: dict,
-                survived_test: dict,
-                weights: dict,
-                new_weights: dict,
+                baseline_predictions: dict,
+                train_answers: dict,
+                valid_answers: dict,
+                start_weights: dict,
+                trained_weights: dict,
                 features_list: list,
                 age_values: list,
                 time_train: float,
                 start_loss: float,
-                new_loss: float
+                train_loss: float
                 ):
     
-    show_main_info(train, test, seed, seed)
+    show_main_info(train_data, valid_data, seed, seed)
     print("RESULTS")
     print("{:<20} {:<20} {:<20} {:<20}".format(*["Model","Dataset","Accuracy ","Loss"]))
-    row_table_v2(binary = baseline,
-                        survived = survived,
+    row_table_v2(binary = baseline_predictions,
+                        survived = train_answers,
                         message = "Baseline",
                         dataset = "Train")
-    row_table(raw_list = train,
-               weights = weights,
-               survived = survived,
+    row_table(raw_list = train_data,
+               weights = start_weights,
+               survived = train_answers,
                message = "Before training",
                dataset = "Train",
                features_list=features_list,
                age_values = age_values)
-    row_table(raw_list = train,
-               weights = new_weights,
-               survived = survived,
+    row_table(raw_list = train_data,
+               weights = trained_weights,
+               survived = train_answers,
                message = "After training",
                dataset = "Train",
                features_list = features_list,
                age_values=age_values
                )
-    row_table(raw_list = test,
-               weights = new_weights,
-               survived = survived_test,
+    row_table(raw_list = valid_data,
+               weights = trained_weights,
+               survived = valid_answers,
                message = "After training",
                dataset="Validation",
                features_list = features_list,
                age_values = age_values
                )
     print(f"\nTraining time: {time_train} sec")
-   
-            
         #show_weights(weights, new_weights)
-    print_is_uppdate_weights(start_loss, new_loss)
+    print_is_uppdate_weights(start_loss, train_loss)
         #show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
            
         #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})

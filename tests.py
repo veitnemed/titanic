@@ -1,8 +1,8 @@
 from storage import survived_dict, get_train_csv_lists
 from features import replace_median_ages
-from config import  (TRAIN, DEFAULT_WEIGHTS,STEPS_FOR_TRAIN,NUMBER_OF_ITERATIONS,
-                     SEED_SPLIT,
-                     SEED_TRAIN)
+from config import  (DATASET_CSV_PATCH, DEFAULT_WEIGHTS,WEIGHT_STEPS,NO_CHANGE_ITERATIONS,
+                     SPLIT_SEED,
+                     TRAIN_SEED)
 from model import train_classifier
 
 def reproducibility():
@@ -17,16 +17,16 @@ def reproducibility():
         
     
         features_list = list(default_weights.keys())
-        train, test  = get_train_csv_lists(TRAIN, seed_value = SEED_SPLIT)
+        train, test  = get_train_csv_lists(DATASET_CSV_PATCH, seed_value = SPLIT_SEED)
         train, test = replace_median_ages(train), replace_median_ages(test)
         survived = survived_dict(train)
         
         new_weights, _ = train_classifier(raw_list = train,
-                                              actual = survived,
-                                              weights = default_weights,
-                                              steps = STEPS_FOR_TRAIN,
-                                              iters = NUMBER_OF_ITERATIONS,
-                                              seed_value = SEED_TRAIN,
+                                              train_answers = survived,
+                                              start_weights = default_weights,
+                                              steps = WEIGHT_STEPS,
+                                              iters = NO_CHANGE_ITERATIONS,
+                                              seed_value = TRAIN_SEED,
                                               features_list = features_list,
                                               age_values = age_values) 
         result.append(new_weights)

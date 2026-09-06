@@ -22,14 +22,14 @@ from features import replace_median_ages
 
     
 from config import (ru_column,  
-                    TRAIN)
+                    DATASET_CSV_PATCH)
 
 
 
 
-with open(TRAIN, 'r', encoding='utf-8') as f1:
+with open(DATASET_CSV_PATCH, 'r', encoding='utf-8') as f1:
     dict_train = list(csv.DictReader(f1))
-data_fd = pd.read_csv(TRAIN)
+data_fd = pd.read_csv(DATASET_CSV_PATCH)
 l = len(data_fd)
 print(l)
 os.system("cls")

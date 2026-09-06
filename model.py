@@ -80,25 +80,25 @@ def train_steps(raw_list: list,
                      iters: int) -> tuple[dict, float]:
     return
 def train_classifier(raw_list: list, 
-                     actual: dict, 
-                     weights: dict, 
+                     train_answers: dict, 
+                     start_weights: dict, 
                      steps: float, 
                      iters: int,
                      seed_value: int,
                      features_list: list,
                      age_values,
-                     show_progress: bool = False) -> tuple[dict, float]:
+                     is_show_progress: bool = False) -> tuple[dict, float]:
 
     "Подбираем лучшие веса для классифкатора"
     
     local_gen = rnd.Random(seed_value)
-    if show_progress is True:
+    if is_show_progress is True:
         row_format = "{:<20} {:<20} {:<20}"
-    new_weights = deepcopy(weights)
+    new_weights = deepcopy(start_weights)
 
     start_time = time.perf_counter()
     
-    if show_progress is True:
+    if is_show_progress is True:
         print(row_format.format(*["Step","Attempts","Accepted"]))
     for step in steps:
         i = 0
@@ -106,7 +106,7 @@ def train_classifier(raw_list: list,
         c = 0
         while i <= iters: # Пока не будет iters попыток без улчшения
             new_weights, new = select_weights(raw_list = raw_list,
-                                              actual_survived = actual,
+                                              actual_survived = train_answers,
                                               weights = new_weights,
                                               step = step,
                                               seed_value = seed_value,
@@ -120,7 +120,7 @@ def train_classifier(raw_list: list,
             else:
                 i += 1
             k +=1
-        if show_progress is True:    
+        if is_show_progress is True:    
             print(row_format.format(*[round(step,3),k,c]))
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)

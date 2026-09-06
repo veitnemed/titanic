@@ -1,22 +1,16 @@
 "Глобальные константы, "
 import os 
+
 dirname = os.path.dirname(__file__)
-TRAIN = os.path.join(dirname, "datasets/train.csv")
-RESULT = os.path.join(dirname, "data/result_train_binare.csv")
-WEIGHTS = os.path.join(dirname,"data/weights.json")
+DATASET_CSV_PATCH = os.path.join(dirname, "datasets/train.csv")
+RESULT_PATCH = os.path.join(dirname, "data/result_train_binare.csv")
+WEIGHTS_JSON_PATCH = os.path.join(dirname,"data/weights.json")
 
-
-STEPS_FOR_TRAIN = [1, 0.5, 0.25, 0.125]
-NUMBER_OF_ITERATIONS = 100
+WEIGHT_STEPS = [1, 0.5, 0.25, 0.125]
+NO_CHANGE_ITERATIONS = 100
 THREASHOLD = 0.5
-SEED_SPLIT = 1
-SEED_TRAIN = SEED_SPLIT
-
-CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
-
-COLUMNS_PREDICT = ["PassengerId", "Score"]
-COLUMNS_BINARE = ["PassengerId", "Survived"]
-
+SPLIT_SEED = 1
+TRAIN_SEED = SPLIT_SEED
 DEFAULT_WEIGHTS = {
     "Sex": {
         "female": 0,
@@ -64,7 +58,10 @@ DEFAULT_WEIGHTS = {
     "Bias": {"bias": 0}
 
 }
-#del DEFAULT_WEIGHTS["Male & zero"]
+CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
+
+COLUMNS_PREDICT = ["PassengerId", "Score"]
+COLUMNS_BINARE = ["PassengerId", "Survived"]
 
 FEATURES = list(DEFAULT_WEIGHTS.keys())
 

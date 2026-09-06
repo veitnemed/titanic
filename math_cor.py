@@ -1,7 +1,7 @@
 from storage import get_full_csv_list
-from config import TRAIN, CORRELATION_FEATURES
+from config import DATASET_CSV_PATCH, CORRELATION_FEATURES
 from features import replace_feature_values, get_column_in_matrix, replace_median_ages
-data = get_full_csv_list(TRAIN)
+data = get_full_csv_list(DATASET_CSV_PATCH)
 data = replace_feature_values(data,"Sex",{"female": 1, "male": 0})
 data = replace_median_ages(data)
 # >> 891
