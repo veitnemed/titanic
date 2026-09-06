@@ -43,7 +43,7 @@ def init_train_dicts(train_data: list, valid_data: list) -> dict:
              "baseline_predictions": baseline_predictions}
 
 
-def impact_weights(valid_data, train_data, start_loss, seed):
+def ablation_weights_test(valid_data, train_data, start_loss, seed):
     
     print("ВКЛАДЫ ВЕСОВ\n")
     print(f"Изначальный LOSS: {round(start_loss, 3)}")
@@ -73,18 +73,19 @@ def impact_weights(valid_data, train_data, start_loss, seed):
     for class_feature, feature in losses_result.items():
         print(f"Loss без {class_feature}: {feature} ")
         
-def mean_impact_weights(test: list, train: list):
+def series_ablation(test: list, train: list):
+    
     for idx, seed in enumerate(list(range(10))):
             print(f"Эксперимент {idx+1}")
             start_loss = train_model(test,train,seed)
-            impact_weights(start_loss,seed)
+            ablation_weights_test(start_loss, seed)
             
 def train_model(valid_data: list, 
              train_data: list, 
              seed: int, 
              is_show_progress: bool = False, 
              is_show_result: bool = False) -> dict:
-    """Обучение, обновыление весов и вывод losss"""
+    """Обучение, обновление весов и вывод loss"""
     
     train_context = init_train_dicts(train_data = train_data, valid_data = valid_data)
     trained_weights, time_train = train_classifier(raw_list = train_data,
@@ -97,14 +98,6 @@ def train_model(valid_data: list,
                                               age_values = train_context["age_values"],
                                               is_show_progress = is_show_progress)
 
-
-    """def print_result(
-                train_context,
-                trained_weights: dict,
-                time_train: float,
-                train_loss: float,
-                seed: int
-                ):"""
     train_loss = calculate_mean_loss(valid_data,train_context["valid_answers"],trained_weights,train_context["features_list"], train_context["age_values"])
     result_context = {
         "trained_weights": trained_weights,
@@ -119,10 +112,10 @@ def train_model(valid_data: list,
     return result_context
     
 def main_func():
-    train, test  = get_train_csv_lists(DATASET_CSV_PATCH, seed_value = SPLIT_SEED)
-    train, test = replace_median_ages(train), replace_median_ages(test)
-    result_context = train_model(valid_data = test, 
-                         train_data = train, 
+    train_data, valid_data  = get_train_csv_lists(DATASET_CSV_PATCH, seed_value = SPLIT_SEED)
+    train_data, valid_data = replace_median_ages(train_data), replace_median_ages(valid_data)
+    result_context = train_model(valid_data = valid_data, 
+                         train_data = train_data, 
                          seed = TRAIN_SEED,
                          is_show_result = True, 
                          is_show_progress=True)
