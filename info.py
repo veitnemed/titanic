@@ -65,7 +65,7 @@ def show_weights(weights, new_weights):
 def show_main_info(train,test,seed, seed_train):
     """Выводит шапку"""
     
-    print("TITANIC CLASSIFIER\n")
+    print("\n\nINFORMATION FOR TRAINING")
     print(f"Split seed: {seed}")
     print(f"Split seed: {seed_train}")
     print(f"Train: {len(train)} passengers")
@@ -93,3 +93,61 @@ def print_is_uppdate_weights(old_loss: float, new_loss: float) -> bool:
      else:
             word = "not updated"
      print(f"Checkpoint: {word}\n\n")
+
+def show_result(train: list,
+                test: list,
+                seed: int,
+                baseline: dict,
+                survived: dict,
+                survived_test: dict,
+                weights: dict,
+                new_weights: dict,
+                features_list: list,
+                age_values: list,
+                time_train: float,
+                start_loss: float,
+                new_loss: float
+                ):
+    
+    show_main_info(train, test, seed, seed)
+    print("RESULTS")
+    print("{:<20} {:<20} {:<20} {:<20}".format(*["Model","Dataset","Accuracy ","Loss"]))
+    row_table_v2(binary = baseline,
+                        survived = survived,
+                        message = "Baseline",
+                        dataset = "Train")
+    row_table(raw_list = train,
+               weights = weights,
+               survived = survived,
+               message = "Before training",
+               dataset = "Train",
+               features_list=features_list,
+               age_values = age_values)
+    row_table(raw_list = train,
+               weights = new_weights,
+               survived = survived,
+               message = "After training",
+               dataset = "Train",
+               features_list = features_list,
+               age_values=age_values
+               )
+    row_table(raw_list = test,
+               weights = new_weights,
+               survived = survived_test,
+               message = "After training",
+               dataset="Validation",
+               features_list = features_list,
+               age_values = age_values
+               )
+    print(f"\nTraining time: {time_train} sec")
+   
+            
+        #show_weights(weights, new_weights)
+    print_is_uppdate_weights(start_loss, new_loss)
+        #show_top_n_error(train, survived, new_weights, 20, features_list, age_values)
+           
+        #new_data = replace_feature_values(train,"Sex",{"female": 1, "male": 0})
+        #new_data = replace_median_ages(new_data)
+        #dict_loss = create_dict_loss(train, survived, new_weights, features_list)
+        #new_data = add_column_from_dataset(new_data, dict_loss, "Loss")
+        #print_matrix(cor_marix(new_data))  
