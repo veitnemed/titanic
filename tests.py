@@ -34,8 +34,12 @@ def reproducibility():
     return  result[0] == result[1]
 
 def main_tests():
-    
-    assert reproducibility() is True
 
+    repr =  reproducibility() 
+    flags_list = [repr]
+    for idx,fg in enumerate(flags_list):
+        print(idx+1,") Воспроизводимость рандома:", fg)
+        assert fg is True
+    
 if __name__ == "__main__":
     main_tests()

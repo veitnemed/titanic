@@ -1,12 +1,9 @@
-from storage import (
-                     survived_dict,
+from storage import (survived_dict,
                      baseline_dict, 
                      get_train_csv_lists,
                      save_json,
                      load_json, 
                      json_init)
-
-from features import replace_median_ages
 from config import  (TRAIN, 
                      DEFAULT_WEIGHTS,
                      STEPS_FOR_TRAIN,
@@ -14,11 +11,12 @@ from config import  (TRAIN,
                      WEIGHTS,
                      SEED_SPLIT,
                      SEED_TRAIN)
+from features import replace_median_ages
 from info import show_result
 from model import train_classifier, calculate_mean_loss
 import os
 
-def init_train_dicts(train, test):
+def init_train_dicts(train: list, test: list) -> dict:
     
     default_weights = DEFAULT_WEIGHTS.copy()
     age_values = None
@@ -33,10 +31,17 @@ def init_train_dicts(train, test):
     baseline = baseline_dict(train)
     survived_test = survived_dict(test)
     start_loss = calculate_mean_loss(train, survived, weights, features_list, age_values)
-    return (weights, survived, start_loss, survived_test, features_list, age_values, baseline)
+    train_context = {"weights": weights, 
+                     "survived": survived,
+                     "start_loss": start_loss,
+                     "survived_test": survived_test,
+                     "features_list": features_list,
+                     "age_values": age_values,
+                     "baseline": baseline}
+    return train_context
 
 
-def impact_weghts(test, train, start_loss, seed):
+def impact_weights(test, train, start_loss, seed):
     
     print("ВКЛАДЫ ВЕСОВ\n")
     print(f"Изначальный LOSS: {round(start_loss, 3)}")
@@ -70,11 +75,11 @@ def impact_weghts(test, train, start_loss, seed):
     for class_feature, feature in res.items():
         print(f"Loss без {class_feature}: {feature} // Польза {100*round(feature-start_loss,4)} % ")
         
-def impact_weights(test,train):
+def mean_impact_weights(test: list, train: list):
     for idx, seed in enumerate(list(range(10))):
             print(f"Эксперимент {idx+1}")
             start_loss = training(test,train,seed)
-            impact_weghts(start_loss,seed)
+            impact_weights(start_loss,seed)
             
 def training(test: list, 
              train: list, 
@@ -83,20 +88,33 @@ def training(test: list,
              is_show_result: bool = False) -> dict:
     """Обучение, обновыление весов и вывод losss"""
     
-    weights, survived, start_loss, survived_test, features_list, age_values, baseline = init_train_dicts(train,test)
+    train_context = init_train_dicts(train,test)
     weights_train, time_train = train_classifier(raw_list = train,
-                                              actual = survived,
-                                              weights = weights,
+                                              actual = train_context["survived"],
+                                              weights = train_context["weights"],
                                               steps = STEPS_FOR_TRAIN,
                                               iters = NUMBER_OF_ITERATIONS,
                                               seed_value = seed,
-                                              features_list = features_list,
-                                              age_values = age_values,
+                                              features_list = train_context["features_list"],
+                                              age_values = train_context["age_values"],
                                               show_progress = is_show_progress)
-    loss_train = calculate_mean_loss(test,survived_test,weights_train,features_list, age_values)
+    
+    loss_train = calculate_mean_loss(test,train_context["survived_test"],weights_train,train_context["features_list"], train_context["age_values"])
     if is_show_result is True:
-        show_result(train,test,seed,baseline,survived,survived_test,weights,weights_train,features_list,age_values,time_train,start_loss,loss_train)
-        
+        show_result(train = train,
+                    test = test,
+                    seed = seed,
+                    weights = train_context["weights"],
+                    new_weights = weights_train,
+                    baseline = train_context["baseline"],
+                    survived = train_context["survived"],
+                    survived_test = train_context["survived_test"],
+                    features_list = train_context["features_list"],
+                    age_values = train_context["age_values"],
+                    start_loss = train_context["start_loss"],
+                    new_loss = loss_train,
+                    time_train = time_train
+                    )
     return {
         "weights_train": weights_train,
         "loss_train": loss_train,
