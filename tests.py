@@ -33,6 +33,11 @@ def reproducibility():
         
     return  result[0] == result[1]
 
+from main import ablation_weights_test
+
+#def test_pop_weight():
+    
+
 def main_tests():
 
     repr =  reproducibility() 

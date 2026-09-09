@@ -6,11 +6,12 @@ DATASET_CSV_PATH = os.path.join(dirname, "datasets/train.csv")
 RESULT_PATH = os.path.join(dirname, "data/result_train_binare.csv")
 WEIGHTS_JSON_PATH = os.path.join(dirname,"data/weights.json")
 
-WEIGHT_STEPS = [1, 0.5, 0.25, 0.125]
+WEIGHT_STEPS = [0.5, 0.25, 0.125, 0.05]
 NO_CHANGE_ITERATIONS = 100
 THREASHOLD = 0.5
 SPLIT_SEED = 1
 TRAIN_SEED = SPLIT_SEED
+SEEDS_RANGE = [0, 1, 2, 3, 4]
 DEFAULT_WEIGHTS = {
     "Sex": {
         "female": 0,
