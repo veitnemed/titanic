@@ -9,9 +9,9 @@ WEIGHTS_JSON_PATH = os.path.join(dirname,"data/weights.json")
 WEIGHT_STEPS = [0.5, 0.25, 0.125, 0.05]
 NO_CHANGE_ITERATIONS = 100
 THREASHOLD = 0.5
-SPLIT_SEED = 1
+SPLIT_SEED = 10
 TRAIN_SEED = SPLIT_SEED
-SEEDS_RANGE = [0, 1, 2, 3, 4]
+SEEDS_RANGE = [0, 1]
 DEFAULT_WEIGHTS = {
     "Sex": {
         "female": 0,
@@ -27,15 +27,15 @@ DEFAULT_WEIGHTS = {
         "8": 0
 
     },
-    "Parch": {
-        "0": 0,
-        "1": 0,
-        "2": 0,
-        "3": 0,
-        "4": 0,
-        "5": 0,
-        "6": 0,
-    },
+    #"Parch": {
+     #   "0": 0,
+      #  "1": 0,
+       # "2": 0,
+        #"3": 0,
+        #"4": 0,
+        #"5": 0,
+        #"6": 0,
+    #},
     "Pclass": {
         "1": 0,
         "2": 0,
@@ -53,12 +53,13 @@ DEFAULT_WEIGHTS = {
             "45": 0,
             "100": 0
         },
-        "Male & zero": {
-      "Male & zero": 0
+        "male embarked s": {
+      "male embarked s": 0
    },
     "Bias": {"bias": 0}
 
 }
+
 CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
 
 COLUMNS_PREDICT = ["PassengerId", "Score"]

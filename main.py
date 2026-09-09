@@ -13,7 +13,7 @@ from config import  (DATASET_CSV_PATH,
                      TRAIN_SEED,
                      SEEDS_RANGE)
 from features import replace_median_ages
-from info import print_result
+from info import print_result, show_top_n_error
 from model import train_classifier, calculate_mean_loss
 import os
 
@@ -51,7 +51,10 @@ def print_ablation_result(full_model_valid_loss: float, seed_amount: int, mean_l
     for tup in mean_losses_without_feature.items():
             
             class_feature, feature = tup
-            print(f"Loss без {class_feature}: {round(feature,3)} ")
+            feat_round = round(feature,3)
+            delta_round = round(feature - full_model_valid_loss, 3)
+            precent = round(100*(feature/full_model_valid_loss))
+            print(f"Loss без {class_feature}: {feat_round}; Вклад: {delta_round} / {precent} ")
                 
 def ablation_weights_test(filename, seed):
     
@@ -97,13 +100,14 @@ def series_ablation(filename: str, seed_range = SEEDS_RANGE):
                           seed_amount = N, 
                           mean_losses_without_feature = mean_losses_without_feature )
                 
-            
-            
+           
 def train_model(filename: str,
              seed: int, 
              is_show_progress: bool = False, 
-             is_show_result: bool = False) -> dict:
+             is_show_result: bool = False,
+             is_show_top_error: bool = False) -> dict:
     """Обучение, обновление весов и вывод loss"""
+    
     train_data, valid_data  = get_train_csv_lists(filename, seed_value = seed)
     train_data, valid_data = replace_median_ages(train_data), replace_median_ages(valid_data)
     train_context = init_train_dicts(train_data = train_data, valid_data = valid_data)
@@ -128,18 +132,25 @@ def train_model(filename: str,
                     result_context = result_context,
                     seed = seed,
                     )
+    if is_show_top_error is True:
+        show_top_n_error(train_data,
+                         train_context["train_answers"],
+                         trained_weights,
+                         len(train_data) - 1,
+                         train_context["features_list"],
+                         train_context["age_values"])
     return result_context
     
 def main_func():
     
-    train_data, valid_data  = get_train_csv_lists(DATASET_CSV_PATH, seed_value = SPLIT_SEED)
-    train_data, valid_data = replace_median_ages(train_data), replace_median_ages(valid_data)
     result_context = train_model(
                          DATASET_CSV_PATH,
                          seed = TRAIN_SEED,
                          is_show_result = True, 
-                         is_show_progress = True)
-    #save_json(WEIGHTS_JSON_PATH, result_context["trained_weights"])
+                         is_show_progress = True,
+                         is_show_top_error = True,)
+    
+    save_json(WEIGHTS_JSON_PATH, result_context["trained_weights"])
     #result_ablation = ablation_weights_test(valid_data, train_data, TRAIN_SEED)
     #print_ablation_result(tottal_loss = result_context["valid_loss"], 
                           #seed = SPLIT_SEED, 

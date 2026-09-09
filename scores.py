@@ -53,9 +53,9 @@ def get_score(passenger: dict, weights: dict, features_list: list, age_values = 
         if feature == "Bias":
             score += weights["Bias"]["bias"]
             continue
-        if feature == "Male & zero":
-            if  passenger["Parch"] == '0' and passenger["SibSp"] == '0':
-                score += weights["Male & zero"]["Male & zero"]
+        if feature == "male embarked s":
+            if passenger["Sex"] == "male" and passenger["Embarked"] == "S":
+                score += weights["male embarked s"]["male embarked s"]
             continue
             
         values = passenger[feature]

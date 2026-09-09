@@ -40,3 +40,5 @@ Loss без Embarked: 0.447
 Loss без Age: 0.476 
 Loss без Male & zero: 0.447 
 Loss без Bias: 0.446 
+
+удалил Parch
