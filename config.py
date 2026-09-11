@@ -14,11 +14,11 @@ TRAIN_SEED = SPLIT_SEED
 SEEDS_RANGE = [0, 1]
 DEFAULT_WEIGHTS = {
     "Sex": {
-        "female": 0,
+        #"female": 0,
         "male": 0,
     },
     "SibSp": {
-        "0": 0,
+        #"0": 0,
         "1": 0,
         "2": 0,
         "3": 0,
@@ -37,28 +37,24 @@ DEFAULT_WEIGHTS = {
         #"6": 0,
     #},
     "Pclass": {
-        "1": 0,
+        #"1": 0,
         "2": 0,
         "3": 0
     },
     "Embarked": {
-        "Q": 0,
+        #"Q": 0,
         "S": 0,
         "C": 0
     },
     "Age":
         {
-            "6": 0,
+            #"6": 0,
             "18": 0,
             "45": 0,
             "100": 0
         },
-        "male embarked s": {
-      "male embarked s": 0
-   },
-    "Bias": {"bias": 0}
-
-}
+   
+    "Bias": {"bias": 0}}
 
 CORRELATION_FEATURES = ["Age","Pclass","Sex","Parch","SibSp","Fare","Survived", "Loss"]
 

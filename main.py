@@ -148,14 +148,14 @@ def main_func():
                          seed = TRAIN_SEED,
                          is_show_result = True, 
                          is_show_progress = True,
-                         is_show_top_error = True,)
+                         is_show_top_error = False,)
     
     save_json(WEIGHTS_JSON_PATH, result_context["trained_weights"])
     #result_ablation = ablation_weights_test(valid_data, train_data, TRAIN_SEED)
     #print_ablation_result(tottal_loss = result_context["valid_loss"], 
                           #seed = SPLIT_SEED, 
                           #losses_result = result_ablation)
-    series_ablation(DATASET_CSV_PATH)
+    #series_ablation(DATASET_CSV_PATH)
     
 if __name__ == "__main__":
     os.system("cls")

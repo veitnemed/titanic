@@ -123,6 +123,7 @@ def train_classifier(raw_list: list,
             k +=1
         if is_show_progress is True:    
             print(row_format.format(*[round(step,3),k,c]))
+    
     end_time = time.perf_counter() 
     t = round(end_time - start_time,2)
     return new_weights, t

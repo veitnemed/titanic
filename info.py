@@ -68,16 +68,12 @@ def show_main_info(train,test,seed, seed_train):
     print(f"Validation: {len(test)} passengers\n\n")
 
 def show_top_n_error(train: list, survived: dict, new_weights: dict, n: int, features_list: list, age_values):
-    from scores import get_score, sigmoid, log_loss
+    import pandas as pd
+    df = pd.read_csv(DATASET_CSV_PATH)
+    df = df.reset_index()
+    df = df.drop(labels = ["Name", "Ticket", "Cabin","index"], axis = 1)
     print(f'TOP LOSS (top {n})')
-    dict_loss = {}
-    for passenger in train:
-        id = survived["id"]
-        score = get_score(passenger, new_weights, features_list, age_values)
-        sg =sigmoid(score)
-        loss = log_loss(int(survived["id"]),sg)
-            
-    dict_loss[]
+    dict_loss = create_dict_loss(train, survived, new_weights, features_list,age_values)
     
     for idx, item in enumerate(sorted(dict_loss.items(), key = lambda t: -t[1])):
         id, loss = item
