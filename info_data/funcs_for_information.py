@@ -1,11 +1,14 @@
 "Вспомгательные функции для вывода информации"
 
-def all_status(train_dataset: list, feature: str) -> set:
+import pandas as pd
+import numpy as np
 
-    values_set = set()
-    for passenger in train_dataset:
-        values_set.add(passenger[feature])
-    return values_set
+
+
+
+def all_status(dataset_df, feature):
+    """Возврщает уникальные значнния признака value из """
+    return set(dataset_df[feature].unique())
 
 def survived_in_range(train_dataset: list, ages):
     
@@ -53,7 +56,7 @@ def group_year_range(train_dataset, step_year=5) -> dict:
 
         if age_str != "":
             age = float(age_str)
-            range_year = (age//step_year)*step_year
+            range_year = (age //step_year)*step_year
             stat_dict[range_year] +=1
         else:
             stat_dict[-1] +=1
