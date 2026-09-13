@@ -4,8 +4,6 @@ __pycache__/
 test_pandas.py
 result.txt
 venv/
-output_data/
-datasets/
+
 AGENTS.md
 plans.txt
-data/weights.json
